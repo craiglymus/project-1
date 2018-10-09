@@ -45,17 +45,17 @@ app.get('/api/insects', (req, res) => {
 //Create: Creates new insect entry
 
 app.post('/api/insects', (req, res) => {
-  let insectData = req.body
+  let insectData = req.body;
   console.log (`posting ${insectData}`);
   db.Insect.create(insectData, (err, savedInsect) => {
     if (err) throw err;
-    res.json(savedInsect)
+    res.json(savedInsect);
   })
 });
 
 //Delete: Destroys existing insect entry
 
-app.delete(`/api/insects/:id`, (req, res) => {
+app.delete('/api/insects/:id', (req, res) => {
   let insectId = req.params.id;
   console.log(insectId)
   db.Insect.deleteOne({_id: insectId}, (err, deletedInsect) => {
@@ -65,6 +65,17 @@ app.delete(`/api/insects/:id`, (req, res) => {
 });
 
 //Update: Edits existing insect entry
+ app.put('/api/insects/:id', (req, res) => {
+  let insectId = req.params.id;
+  let updateBody = req.body;
+  db.Insect.findOneAndUpdate({_id: insectId}, updateBody, (err, updatedInsect) => {
+    if (err) throw err;
+    console.log(`updated ${updatedInsect}`);
+    res.json(updatedInsect);
+  })
+});
+
+
 
 app.listen(port, () => {
   console.log(`Bug app is listening on port:${port}`);

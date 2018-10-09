@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
 app.get('/api/insects', (req, res) => {
   db.Insect.find({}, (err, insects) => {
     if (err) throw err;
-    res.json(data: insects)
+    res.json(insects)
   })
 });
 

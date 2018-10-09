@@ -23,17 +23,46 @@ app.use(express.static('public'));
 /* Routes */
 
 //Root Route
-app.get('/', (req,res) =>{
-  res.sendFile('/views/index.html', {root: __dirname});
+app.get('/', (req, res) => {
+  res.sendFile('/views/index.html', {
+    root: __dirname
+  });
 });
 
 //Read: Get all insects in database
+
+app.get('/api/insects', (req, res) => {
+  db.Insect.find({}, (err, insects) => {
+    if (err) throw err;
+    res.json(data: insects)
+  })
+});
+
+
 
 //Read: Gets individual insect entry by id
 
 //Create: Creates new insect entry
 
+app.post('/api/insects', (req, res) => {
+  let insectData = req.body
+  console.log (`posting ${insectData}`);
+  db.Insect.create(insectData, (err, savedInsect) => {
+    if (err) throw err;
+    res.json(savedInsect)
+  })
+});
+
 //Delete: Destroys existing insect entry
+
+app.delete(`/api/insects/:id`, (req, res) => {
+  let insectId = req.params.id;
+  console.log(insectId)
+  db.Insect.deleteOne({_id: insectId}, (err, deletedInsect) => {
+    if (err) throw err;
+    res.json(deletedInsect)
+  })
+});
 
 //Update: Edits existing insect entry
 

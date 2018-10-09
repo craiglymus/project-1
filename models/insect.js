@@ -6,7 +6,4 @@ const InsectSchema = new Schema({
 });
 
 const Insect = mongoose.model('Insect', InsectSchema)
-
-const mongoose = require('mongoose'),
-
 module.exports = Insect;

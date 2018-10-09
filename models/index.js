@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-mongoose.connect( process.env.MONGODB_URI || "mongodb://localhost/PROJECT-1", {useMongoClient: true});
+mongoose.connect("mongodb://localhost:27017/project-1", {useNewUrlParser: true});
 
-// module.exports.Campsite = require("./campsite.js.example");
-
-module.exports.Movie = require('./Insect.js');
+module.exports.Insect = require('./insect');

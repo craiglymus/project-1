@@ -33,11 +33,18 @@ const exampleFamily = {
 
 /* Prepopulated Insects */
 const seedInsects = [{
-  commonName: 'western honey bee',
-  scientificName: 'apis mellifera',
+  commonName: 'Western Honey Bee',
+  scientificName: 'Apis Mellifera',
   familyName: 'Apidae',
   description: `These are probably the bees you're thinking of when you think of honey bees.`,
-}];
+},
+{
+  commonName: 'Common Red Ant',
+  scientificName: 'Myrmica Rubra',
+  familyName: 'Formicidae',
+  description: 'Small red ants found in backyards everywhere.'
+}
+];
 
 
 
@@ -99,15 +106,15 @@ const addWikiToFamilies = (families) => {
   }
 }
 
-// addWikiToFamilies(familyNames);
+addWikiToFamilies(familyNames);
 
-/* Seeds the insect data and populates it with wikipedia data*/
-
-
+//Delete families
 db.Family.deleteMany({}, (err, removedFamilies)=>{
   if (err) throw err;
+//Delete Insects
   db.Insect.deleteMany({}, (err, newInsect) => {
     if (err) throw err;
+    //for loop for insects
     for (let i = 0; i < seedInsects.length; i++) {
       let wikiItem = seedInsects[i];
       let title = wikiItem.commonName;
@@ -129,7 +136,7 @@ db.Family.deleteMany({}, (err, removedFamilies)=>{
 
         db.Insect.create(wikiItem, (err, savedInsect) => {
           if (err) throw err;
-          db.Family.create(exampleFamily, (err, savedFamily) => {
+          db.Family.findOne({name: wikiItem.familyName}, (err, savedFamily) => {
             if (err) throw err;
             savedFamily.insects.push(savedInsect);
             savedFamily.save((err, savedFamily)=>{
@@ -140,7 +147,7 @@ db.Family.deleteMany({}, (err, removedFamilies)=>{
             savedInsect.save((err, savedInsect)=>{
               if(err) throw err;
               console.log(`Saved ${savedInsect}`)
-            })
+            });
           });
         });
       });
@@ -148,3 +155,6 @@ db.Family.deleteMany({}, (err, removedFamilies)=>{
     }
   });
 })
+
+
+/* Seeds the insect data and populates it with wikipedia data*/

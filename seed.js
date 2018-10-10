@@ -24,9 +24,7 @@ const familyNames = [
   'Mutillidae'
 ]
 
-
-
-
+/* Prepopulated Insects */
 const seedInsects = [
   {
     commonName: 'western honey bee',
@@ -44,11 +42,15 @@ const seedInsects = [
 
 */
 
+//An Array that holds all of the family objects (may delete later)
 let seedFamilies = [];
+
+/* Iterates through the families in the familyNames array.
+   For each name in the array, it creates a mongoose model that is populated with MediaWiki API information.*/
 const addWikiToFamilies = (families) =>{
 
   for(let i = 0; i< families.length; i++){
-
+    //Initalizes a wikiItem object that will hold all of the data and will be used to create the model.
     let wikiItem = {
       name: families[i]
     };
@@ -64,14 +66,21 @@ const addWikiToFamilies = (families) =>{
           'User-Agent': 'my-reddit-client'
       }
     }
+    //Pulls from the node.js request module to make an AJAX/HTTP Request through node.
     request(getRequest, (err, res, body) => {
       if (err) throw err;
       let json = JSON.parse(body);
       if (json.type !== 'disambiguation'){
+
+        //If the data exists, it populates with that data.
         if(json.content_urls) wikiItem.link = json.content_urls.desktop.page
         if (json.extract) wikiItem.summary = json.extract;
-        if(json.originalimage) wikiItem.image = json.originalimage.source;
+        if(json.originalimage) wikiItem.image = json.originalimage.source; //eventually, default image
+
+        //Adds the data to the collection seeded families.
         seedFamilies.push(wikiItem);
+
+        //Creates a family document.
         db.Family.create(wikiItem, (err, savedFamily)=>{
           console.log(`saved family ${savedFamily}`);
         });
@@ -85,11 +94,13 @@ const addWikiToFamilies = (families) =>{
 
 addWikiToFamilies(familyNames);
 
+/* Seeds the insect data and populates it with wikipedia data*/
 db.Insect.deleteMany({}, (err, newInsect)=>{
   if (err) throw err;
   for(let i = 0; i< seedInsects.length; i++){
     let wikiItem = seedInsects[i];
-    let title = wikiItem.commonName ? wikiItem.commonName : wikiItem.scientificName;
+    let title = wikiItem.commonName;
+
     let getRequest = {
       method: 'GET',
       url: `${wikiBaseUrl}${title}`,
@@ -101,9 +112,9 @@ db.Insect.deleteMany({}, (err, newInsect)=>{
     }
     request(getRequest, (err, res, body)=>{
       let json = JSON.parse(body);
-      wikiItem.link = json.content_urls.desktop.page
-      wikiItem.summary = json.extract;
-      wikiItem.image = json.originalimage.source;
+      if(json.content_urls) wikiItem.link = json.content_urls.desktop.page
+      if (json.extract) wikiItem.summary = json.extract;
+      if(json.originalimage) wikiItem.image = json.originalimage.source;
     });
     db.Insect.create(newInsect, (err, savedInsect)=>{
       if(err) throw err;

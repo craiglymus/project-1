@@ -24,15 +24,22 @@ const familyNames = [
   'Mutillidae'
 ]
 
+const exampleFamily = {
+  name: 'Apidae',
+  link: 'https://en.wikipedia.org/wiki/Apidae',
+  summary: 'Apidae is the largest family within the superfamily Apoidea, containing at least 5700 species of bees. The family includes some of the most commonly seen bees, including bumblebees and honey bees, but also includes stingless bees, carpenter bees, orchid bees, cuckoo bees, and a number of other less widely known groups. Many are valuable pollinators in natural habitats and for agricultural crops.',
+  image: 'https://upload.wikimedia.org/wikipedia/commons/3/32/Xylocopa_micans.JPG'
+}
+
 /* Prepopulated Insects */
-const seedInsects = [
-  {
-    commonName: 'western honey bee',
-    scientificName: 'apis mellifera',
-    familyName: 'Apidae',
-    description: `These are probably the bees you're thinking of when you think of honey bees.`,
-  }
-];
+const seedInsects = [{
+  commonName: 'western honey bee',
+  scientificName: 'apis mellifera',
+  familyName: 'Apidae',
+  description: `These are probably the bees you're thinking of when you think of honey bees.`,
+}];
+
+
 
 /*
 - Create a function to iterate over seedFamilies
@@ -47,9 +54,9 @@ let seedFamilies = [];
 
 /* Iterates through the families in the familyNames array.
    For each name in the array, it creates a mongoose model that is populated with MediaWiki API information.*/
-const addWikiToFamilies = (families) =>{
+const addWikiToFamilies = (families) => {
 
-  for(let i = 0; i< families.length; i++){
+  for (let i = 0; i < families.length; i++) {
     //Initalizes a wikiItem object that will hold all of the data and will be used to create the model.
     let wikiItem = {
       name: families[i]
@@ -61,66 +68,83 @@ const addWikiToFamilies = (families) =>{
       method: 'GET',
       url: `${wikiBaseUrl}${title}`,
       headers: {
-          'Accept': 'application/json',
-          'Accept-Charset': 'utf-8',
-          'User-Agent': 'my-reddit-client'
+        'Accept': 'application/json',
+        'Accept-Charset': 'utf-8',
+        'User-Agent': 'my-reddit-client'
       }
     }
     //Pulls from the node.js request module to make an AJAX/HTTP Request through node.
     request(getRequest, (err, res, body) => {
-      if (err) throw err;
-      let json = JSON.parse(body);
-      if (json.type !== 'disambiguation'){
+        if (err) throw err;
+        let json = JSON.parse(body);
+        if (json.type !== 'disambiguation') {
 
-        //If the data exists, it populates with that data.
-        if(json.content_urls) wikiItem.link = json.content_urls.desktop.page
-        if (json.extract) wikiItem.summary = json.extract;
-        if(json.originalimage) wikiItem.image = json.originalimage.source; //eventually, default image
+          //If the data exists, it populates with that data.
+          if (json.content_urls) wikiItem.link = json.content_urls.desktop.page
+          if (json.extract) wikiItem.summary = json.extract;
+          if (json.originalimage) wikiItem.image = json.originalimage.source; //eventually, default image
 
-        //Adds the data to the collection seeded families.
-        seedFamilies.push(wikiItem);
+          //Adds the data to the collection seeded families.
+          seedFamilies.push(wikiItem);
 
-        //Creates a family document.
-        db.Family.create(wikiItem, (err, savedFamily)=>{
-          console.log(`saved family ${savedFamily}`);
-        });
-      }
-    })
-    .on('end', ()=>{
-      console.log(`families: ${seedFamilies}`);
-    })
+          //Creates a family document.
+          db.Family.create(wikiItem, (err, savedFamily) => {
+            console.log(`saved family ${savedFamily}`);
+          });
+        }
+      })
+      .on('end', () => {
+        console.log(`families: ${seedFamilies}`);
+      })
   }
 }
 
-addWikiToFamilies(familyNames);
+// addWikiToFamilies(familyNames);
 
 /* Seeds the insect data and populates it with wikipedia data*/
-db.Insect.deleteMany({}, (err, newInsect)=>{
-  if (err) throw err;
-  for(let i = 0; i< seedInsects.length; i++){
-    let wikiItem = seedInsects[i];
-    let title = wikiItem.commonName;
 
-    let getRequest = {
-      method: 'GET',
-      url: `${wikiBaseUrl}${title}`,
-      headers: {
+
+db.Family.deleteMany({}, (err, removedFamilies)=>{
+  if (err) throw err;
+  db.Insect.deleteMany({}, (err, newInsect) => {
+    if (err) throw err;
+    for (let i = 0; i < seedInsects.length; i++) {
+      let wikiItem = seedInsects[i];
+      let title = wikiItem.commonName;
+
+      let getRequest = {
+        method: 'GET',
+        url: `${wikiBaseUrl}${title}`,
+        headers: {
           'Accept': 'application/json',
           'Accept-Charset': 'utf-8',
           'User-Agent': 'my-reddit-client'
+        }
       }
-    }
-    request(getRequest, (err, res, body)=>{
-      let json = JSON.parse(body);
-      if(json.content_urls) wikiItem.link = json.content_urls.desktop.page
-      if (json.extract) wikiItem.summary = json.extract;
-      if(json.originalimage) wikiItem.image = json.originalimage.source;
+      request(getRequest, (err, res, body) => {
+        let json = JSON.parse(body);
+        if (json.content_urls) wikiItem.link = json.content_urls.desktop.page
+        if (json.extract) wikiItem.summary = json.extract;
+        if (json.originalimage) wikiItem.image = json.originalimage.source;
 
-      db.Insect.create(wikiItem, (err, savedInsect)=>{
-        if(err) throw err;
-        console.log(`Saved ${savedInsect}`)
+        db.Insect.create(wikiItem, (err, savedInsect) => {
+          if (err) throw err;
+          db.Family.create(exampleFamily, (err, savedFamily) => {
+            if (err) throw err;
+            savedFamily.insects.push(savedInsect);
+            savedFamily.save((err, savedFamily)=>{
+              if (err) throw err;
+              console.log(`Saved ${savedFamily}`)
+            });
+            savedInsect.family = savedFamily;
+            savedInsect.save((err, savedInsect)=>{
+              if(err) throw err;
+              console.log(`Saved ${savedInsect}`)
+            })
+          });
+        });
       });
-    });
 
-  }
-});
+    }
+  });
+})

@@ -9,12 +9,23 @@
 </head>
 
 <body>
+
   <div class="bugWrapper">
     <ul class="bugData">
 
     </ul>
   </div>
-  <a href="/addbug"><button id="addBugLink">Add A New Bug</button></a>
+
+  <form id="addBug">
+
+    <input type="text" id="addBugCommonName" name="commonName" placeholder="Common Name" />
+    <input type="text" id="addBugScientificName" name="sientificName" placeholder="Scientific Name" />
+    <input type="text" id="addFamilyName" name="familyName" placeholder="Family Name" />
+    <input type="text" id="addBugDescription" name="description" placeholder="Description" />
+
+    <input type="submit" value="Submit" />
+  </form>
+
   <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="../scripts/app.js"></script>
 </body>

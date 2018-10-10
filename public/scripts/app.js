@@ -67,6 +67,13 @@ $(document).on('click', '.delete', (e) => {
   });
 });
 
+// $('#addBugLink').on('click', (e)=>{
+//   $.ajax({
+//     method: 'GET',
+//     url: '/api/addbug'
+//   })
+// })
+
 const setUp = () =>{
   $.ajax({
     method: 'GET',

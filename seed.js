@@ -115,10 +115,12 @@ db.Insect.deleteMany({}, (err, newInsect)=>{
       if(json.content_urls) wikiItem.link = json.content_urls.desktop.page
       if (json.extract) wikiItem.summary = json.extract;
       if(json.originalimage) wikiItem.image = json.originalimage.source;
+
+      db.Insect.create(wikiItem, (err, savedInsect)=>{
+        if(err) throw err;
+        console.log(`Saved ${savedInsect}`)
+      });
     });
-    db.Insect.create(newInsect, (err, savedInsect)=>{
-      if(err) throw err;
-      console.log(`Saved ${savedInsect}`)
-    });
+
   }
 });

@@ -1,3 +1,7 @@
 body{
 
 }
+
+.submitted {
+  display: none;
+}

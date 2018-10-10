@@ -35,6 +35,7 @@ app.get('/addbug', (req, res) => {
   res.sendFile('/views/addbug.html', {root: __dirname});
 });
 
+
 //Read: Get all insects in database
 
 app.get('/api/insects', (req, res) => {

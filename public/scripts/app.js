@@ -32,6 +32,7 @@ const render = (insect) =>{
 }
 
 $('#addBug').on('submit', (e)=>{
+  e.preventDefault()
   let addBugDescription = $('#addBugDescription').val();
   let addedBug = {
     description: addBugDescription
@@ -41,7 +42,7 @@ $('#addBug').on('submit', (e)=>{
     url: '/api/insects',
     data: addedBug,
     success: (response)=>{
-      console.log(`Submitted ${addedBug}`);
+      $('.submitted').show();
     },
     error: ()=>{
       console.log('Error');

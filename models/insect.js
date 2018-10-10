@@ -11,7 +11,7 @@ const InsectSchema = new Schema({
   },
 	image: String,
 	summary: String,
-	description: String.
+	description: String,
 	link: String
 });
 

@@ -1,8 +1,11 @@
 const db = require('./models');
 const mongoose = require('mongoose');
+const request = require('request');
 
+/* Populates seed data with Wikipedia summary and image, using MediaWiki's API */
+const wikiBaseUrl = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
 
-
+/* Prepopulated list of Hymenoptera families */
 const familyNames = [
   //Ants
   'Formicidae',
@@ -11,7 +14,6 @@ const familyNames = [
   'Apidae',
 
   //Sawflies
-  'Agridae',
   'Tenthredinidae',
 
   //Wasps
@@ -22,14 +24,7 @@ const familyNames = [
   'Mutillidae'
 ]
 
-const seedFamilies = [
-  {
-    name: 'Apidae',
-    summary: 'Apidae is the largest family within the superfamily Apoidea, containing at least 5700 species of bees. The family includes some of the most commonly seen bees, including bumblebees and honey bees, but also includes stingless bees (also used for honey production), carpenter bees, orchid bees, cuckoo bees, and a number of other less widely known groups. Many are valuable pollinators in natural habitats and for agricultural crops.',
-    image: 'https://en.wikipedia.org/wiki/Apidae#/media/File:Xylocopa_micans.JPG',
-    link: 'https://en.wikipedia.org/wiki/Apidae'
-  }
-];
+
 
 
 const seedInsects = [
@@ -37,20 +32,82 @@ const seedInsects = [
     commonName: 'western honey bee',
     scientificName: 'apis mellifera',
     familyName: 'Apidae',
-    image: 'https://en.wikipedia.org/wiki/Western_honey_bee#/media/File:Apis_mellifera_Western_honey_bee.jpg',
-    summary: `The western honey bee or European honey bee (Apis mellifera) is the most common of the 7–12 species of honey bee worldwide. The genus name Apis is Latin for "bee", and mellifera is the Latin for "honey-bearing", referring to the species' production of honey for the winter.`
-    description: `These are probably the bees you're thinking of when you think of 'honey bees'.`,
-    link: 'https://en.wikipedia.org/wiki/Western_honey_bee'
+    description: `These are probably the bees you're thinking of when you think of honey bees.`,
   }
 ];
 
+/*
+- Create a function to iterate over seedFamilies
+  - Create the family records
+  - Create insect records
+  - Iterate through insects and associate family to insects and vice versa.
+
+*/
+
+let seedFamilies = [];
+const addWikiToFamilies = (families) =>{
+
+  for(let i = 0; i< families.length; i++){
+
+    let wikiItem = {
+      name: families[i]
+    };
+
+    let title = wikiItem.name;
+    console.log(title);
+    let getRequest = {
+      method: 'GET',
+      url: `${wikiBaseUrl}${title}`,
+      headers: {
+          'Accept': 'application/json',
+          'Accept-Charset': 'utf-8',
+          'User-Agent': 'my-reddit-client'
+      }
+    }
+    request(getRequest, (err, res, body) => {
+      if (err) throw err;
+      let json = JSON.parse(body);
+      if (json.type !== 'disambiguation'){
+        if(json.content_urls) wikiItem.link = json.content_urls.desktop.page
+        if (json.extract) wikiItem.summary = json.extract;
+        if(json.originalimage) wikiItem.image = json.originalimage.source;
+        seedFamilies.push(wikiItem);
+        db.Family.create(wikiItem, (err, savedFamily)=>{
+          console.log(`saved family ${savedFamily}`);
+        });
+      }
+    })
+    .on('end', ()=>{
+      console.log(`families: ${seedFamilies}`);
+    })
+  }
+}
+
+addWikiToFamilies(familyNames);
 
 db.Insect.deleteMany({}, (err, newInsect)=>{
   if (err) throw err;
   for(let i = 0; i< seedInsects.length; i++){
-    db.Insect.create(seedInsects[i], (err, savedInsect)=>{
+    let wikiItem = seedInsects[i];
+    let title = wikiItem.commonName ? wikiItem.commonName : wikiItem.scientificName;
+    let getRequest = {
+      method: 'GET',
+      url: `${wikiBaseUrl}${title}`,
+      headers: {
+          'Accept': 'application/json',
+          'Accept-Charset': 'utf-8',
+          'User-Agent': 'my-reddit-client'
+      }
+    }
+    request(getRequest, (err, res, body)=>{
+      let json = JSON.parse(body);
+      wikiItem.link = json.content_urls.desktop.page
+      wikiItem.summary = json.extract;
+      wikiItem.image = json.originalimage.source;
+    });
+    db.Insect.create(newInsect, (err, savedInsect)=>{
       if(err) throw err;
-      console.log(`Saved ${savedInsect}`);
+      console.log(`Saved ${savedInsect}`)
     });
   }
 });

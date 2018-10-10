@@ -1,3 +1,25 @@
+/* Populates seed data with Wikipedia summary and image, using MediaWiki's API */
+const wikiBaseUrl = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
+
+/* Returns the top photo from the article. */
+const getWiki = (item) =>{
+  let title = item.commonName ? item.commonName : item.scientificName;
+  title = title.trim().split(' ').join('_');
+  $.ajax({
+    method: 'GET',
+    url: `${wikiBaseUrl}${title}`,
+    success: (response) =>{
+      console.log(response);
+      let summary = response.extract;
+      let image = response.originalimage.source
+      title.summary = summary;
+      image.summary = image;
+    },
+    error: (err) =>{
+      console.log('Error occurred');
+    }
+  });
+}
 
 const render = (insect) =>{
   console.log(insect);

@@ -51,10 +51,8 @@ h2 {
 
 section h2 {
   margin: 2em;
+  text-transform: uppercase;
 }
-
-h3 {}
-
 ul {
   list-style-type: none;
   padding-left: none;
@@ -93,9 +91,17 @@ nav li {
   display: none;
 }
 
+.logo {
+  width: 3.5%;
+  height: 3.5%;
+  margin: 10px;
+  margin-left: 30px;
+}
+
 /* Hamburger */
 .hamburger {
   margin: 1em 2em;
+  display: none;
 }
 
 .hamline {
@@ -131,22 +137,26 @@ input {
 }
 
 #search input[type=text] {
-  width: 30em;
-  margin-right: 2em;
+  width: 25em;
+  margin-right: 1em;
+  padding: 20px;
+  background-color: #F7F9F3;
+  outline: 1px solid #709F74;
+  font-size: 1em;
 }
 
 input[type=submit] {
   text-align: center;
+  padding: 20px;
+  background-color: #709F74;
+  font-size: 1em;
+  color: #F7F9F3;
 }
 
-input[type=submit]:hover {}
+input[type=submit]:hover {
 
-/* Footer */
-footer {
-  text-align: center;
 }
 
-/* Home Page*/
 /* Header*/
 header {
   height: 100vh;
@@ -158,18 +168,28 @@ header {
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
-  background-image: url("../images/plant1.jpeg");
+  background-image: url("../images/bugLife.png");
 }
 
 header h1 {
-  font-size: 4em;
-  margin: 0;
+  font-size: 5em;
+  margin: -15px;
+  color: #D2A431;
 }
 
 header h3 {
-  font-size: 2em;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  padding: 20px;
   margin: .5em;
   font-weight: 300;
+  color: #263439;
+  margin-bottom: 60px;
+}
+
+/* Footer */
+footer {
+  text-align: center;
 }
 
 /* Introduction */
@@ -273,5 +293,9 @@ off white: #F7F9F3;
 
   .profiles div {
     width: 100%;
+  }
+
+  .hamburger {
+    margin: 1em 2em;
   }
 }

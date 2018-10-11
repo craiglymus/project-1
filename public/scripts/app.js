@@ -1,3 +1,25 @@
+/* Populates seed data with Wikipedia summary and image, using MediaWiki's API */
+const wikiBaseUrl = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
+
+/* Returns the top photo from the article. */
+const getWiki = (item) =>{
+  let title = item.commonName ? item.commonName : item.scientificName;
+  title = title.trim().split(' ').join('_');
+  $.ajax({
+    method: 'GET',
+    url: `${wikiBaseUrl}${title}`,
+    success: (response) =>{
+      console.log(response);
+      let summary = response.extract;
+      let image = response.originalimage.source
+      title.summary = summary;
+      image.summary = image;
+    },
+    error: (err) =>{
+      console.log('Error occurred');
+    }
+  });
+}
 
 const render = (insect) =>{
   console.log(insect);
@@ -48,6 +70,7 @@ $(document).on('submit', '#editBug', (e)=>{
 
 
 $('#addBug').on('submit', (e)=>{
+  e.preventDefault()
   let addBugDescription = $('#addBugDescription').val();
   let addedBug = {
     description: addBugDescription
@@ -57,7 +80,7 @@ $('#addBug').on('submit', (e)=>{
     url: '/api/insects',
     data: addedBug,
     success: (response)=>{
-      console.log(`Submitted ${addedBug}`);
+      $('.submitted').show();
     },
     error: ()=>{
       console.log('Error');
@@ -81,6 +104,10 @@ $(document).on('click', '.delete', (e) => {
     }
   });
 });
+
+$('.hamburger').on('click', ()=>{
+  $('.navLinks').slideToggle();
+})
 
 const setUp = () =>{
   $.ajax({

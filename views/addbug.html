@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="../styles/style.css" />
+</head>
+
+<body>
+  <nav>
+
+    <img class="logo" src="imgs/" alt="Logo" />
+      <div class="hamburger">
+        <div class="hamline"></div>
+        <div class="hamline"></div>
+        <div class="hamline"></div>
+      </div>
+      <ul class="navLinks">
+        <li><a href="/addbug">Add A New Bug</a></li>
+        <li><a href="#">API Documentation</a></li>
+      </ul>
+
+  </nav>
+
+  <section class="addBugForm">
+    <div class="submitted">
+      <h2>Thank you for submitting!</h2>
+    </div>
+
+    <form id="addBug">
+      <div class="addBugNames">
+        <input type="text" id="addBugCommonName" name="commonName" placeholder="Common Name" />
+        <input type="text" id="addBugScientificName" name="sientificName" placeholder="Scientific Name" />
+        <input type="text" id="addFamilyName" name="familyName" placeholder="Family Name" />
+      </div>
+
+      <textarea id="addBugDescription" name="description" placeholder="Description"></textarea>
+
+      <input type="submit" value="Submit" />
+    </form>
+  </section>
+
+
+
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="../scripts/app.js"></script>
+
+  <footer>
+    <p>
+      &copy;2018 Craig Lymus, Natasha Quijano, Tay J Solis
+    </p>
+  </footer>
+</body>
+
+</html>

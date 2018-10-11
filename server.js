@@ -29,15 +29,34 @@ app.get('/', (req, res) => {
   });
 });
 
+//Add Bug Route
+
+app.get('/addbug', (req, res) => {
+  res.sendFile('/views/addbug.html', {root: __dirname});
+});
+
+
 //Read: Get all insects in database
 
 app.get('/api/insects', (req, res) => {
-  db.Insect.find({}, (err, insects) => {
-    if (err) throw err;
-    res.json(insects)
-  })
+  db.Insect.find({})
+           .populate('family')
+           .exec((err, insects) => {
+             if (err) throw err;
+             res.json(insects)
+           });
 });
 
+// Read: Get all families in database
+
+app.get('/api/families', (req, res) => {
+  db.Family.find ({})
+           .populate('insects')
+           .exec((err, families) => {
+             if (err) throw err;
+             res.json(families);
+           });
+});
 
 
 //Read: Gets individual insect entry by id

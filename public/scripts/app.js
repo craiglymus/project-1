@@ -68,12 +68,9 @@ $(document).on('click', '.delete', (e) => {
   });
 });
 
-// $('#addBugLink').on('click', (e)=>{
-//   $.ajax({
-//     method: 'GET',
-//     url: '/api/addbug'
-//   })
-// })
+$('.hamburger').on('click', ()=>{
+  $('.navLinks').slideToggle();
+})
 
 const setUp = () =>{
   $.ajax({

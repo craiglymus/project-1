@@ -9,22 +9,49 @@
 </head>
 
 <body>
-  <div class="submitted">
-    <h2>Thank you for submitting!</h2>
-  </div>
+  <nav>
 
-  <form id="addBug">
+    <img class="logo" src="imgs/" alt="Logo" />
+      <div class="hamburger">
+        <div class="hamline"></div>
+        <div class="hamline"></div>
+        <div class="hamline"></div>
+      </div>
+      <ul class="navLinks">
+        <li><a href="/addbug">Add A New Bug</a></li>
+        <li><a href="#">API Documentation</a></li>
+      </ul>
 
-    <input type="text" id="addBugCommonName" name="commonName" placeholder="Common Name" />
-    <input type="text" id="addBugScientificName" name="sientificName" placeholder="Scientific Name" />
-    <input type="text" id="addFamilyName" name="familyName" placeholder="Family Name" />
-    <input type="text" id="addBugDescription" name="description" placeholder="Description" />
+  </nav>
 
-    <input type="submit" value="Submit" />
-  </form>
+  <section class="addBugForm">
+    <div class="submitted">
+      <h2>Thank you for submitting!</h2>
+    </div>
+
+    <form id="addBug">
+      <div class="addBugNames">
+        <input type="text" id="addBugCommonName" name="commonName" placeholder="Common Name" />
+        <input type="text" id="addBugScientificName" name="sientificName" placeholder="Scientific Name" />
+        <input type="text" id="addFamilyName" name="familyName" placeholder="Family Name" />
+      </div>
+
+      <textarea id="addBugDescription" name="description" placeholder="Description"></textarea>
+
+      <input type="submit" value="Submit" />
+    </form>
+  </section>
+
+
 
   <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="../scripts/app.js"></script>
+
+  <footer>
+    <p>
+      &copy;2018 Craig Lymus, Natasha Quijano, Tay J Solis
+    </p>
+  </footer>
 </body>
 
 </html>

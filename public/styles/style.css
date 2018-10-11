@@ -43,16 +43,20 @@ h1 {
 
 h2, h3 {
   font-weight: 400;
+  text-transform: uppercase;
 }
 
 h2 {
   font-size: 3em;
+  text-transform: uppercase;
 }
 
 section h2 {
   margin: 2em;
+  margin-top: -10px;
   text-transform: uppercase;
 }
+
 ul {
   list-style-type: none;
   padding-left: none;
@@ -64,7 +68,7 @@ a {
   transition: all 1s;
 }
 
-a:hover{
+a:hover {
   letter-spacing: .25em;
 }
 
@@ -94,7 +98,7 @@ nav li {
 .logo {
   width: 3.5%;
   height: 3.5%;
-  margin: 10px;
+  margin: 15px;
   margin-left: 30px;
 }
 
@@ -190,14 +194,24 @@ header h3 {
 /* Footer */
 footer {
   text-align: center;
+  background-color: #F7F9F3;
+  color: #263439;
 }
 
 /* Introduction */
-.intrImage {
-  background-color: #D2A431;
+
+.introduction {
+  color: #263439;
 }
 
+.about {
+  color: #263439;
+}
 /* About Us / Contact Form */
+.aboutContact {
+  background-color: #D2A431;
+  color: #263439;
+}
 .profiles {
   display: flex;
   flex-flow: row wrap;
@@ -252,12 +266,12 @@ footer {
 
 }
 
-textarea{
+h2{
   border-radius: 2px;
   border: 0;
   padding: 10px 25px;
   border-radius: 2px;
-  height: 10em;
+  height: 2em;
 }
 
 #addBug textarea{

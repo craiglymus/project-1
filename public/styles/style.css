@@ -91,15 +91,12 @@ nav li {
   padding: .5em;
 }
 
-.navLinks {
-  display: none;
-}
-
 .logo {
-  width: 3.5%;
-  height: 3.5%;
-  margin: 15px;
-  margin-left: 30px;
+	width: 55px;
+	height: 69px;
+	margin: 30px;
+	padding: 0px;
+	margin-left: 30px;
 }
 
 /* Hamburger */
@@ -211,6 +208,7 @@ footer {
 .aboutContact {
   background-color: #D2A431;
   color: #263439;
+  text-align: center;
 }
 .profiles {
   display: flex;
@@ -310,6 +308,6 @@ off white: #F7F9F3;
   }
 
   .hamburger {
+    display: block;
     margin: 1em 2em;
   }
-}

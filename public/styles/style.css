@@ -269,3 +269,15 @@ off white: #F7F9F3;
   nav ul {
 		display: none;
 	}
+
+  nav .navLinks li {
+    height: 10vh;
+    background-color: #517957;
+    display: flex;
+    flex-direction: column;
+
+}
+
+section h2 {
+  text-align: center;
+}

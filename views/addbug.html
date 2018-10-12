@@ -13,7 +13,7 @@
   <nav>
 
     <img class="logo" src="images/beeLogo.png" alt="Logo" />
-      <div class="hamburger">
+      <div class="hamburger mobile-nav-toggle">
         <div class="hamline"></div>
         <div class="hamline"></div>
         <div class="hamline"></div>
@@ -22,6 +22,7 @@
         <li><a href="/">Home</a></li>
         <li><a href="/addbug">Add A New Bug</a></li>
         <li><a href="/">API Documentation</a></li>
+        <li><a href="/search">Search</a></li>
       </ul>
 
   </nav>
@@ -35,8 +36,8 @@
       <p class="addBug">Add A New Bug</p>
       <div class="addBugNames">
         <input type="text" id="addBugCommonName" name="commonName" placeholder="Common Name" />
-        <input type="text" id="addBugScientificName" name="sientificName" placeholder="Scientific Name" />
-        <input type="text" id="addFamilyName" name="familyName" placeholder="Family Name" />
+        <input type="text" id="addBugScientificName" name="scientificName" placeholder="Scientific Name" />
+        <select name="familyName" id="addBugFamilyName"></select>
       </div>
 
       <textarea id="addBugDescription" name="description" placeholder="Description"></textarea>

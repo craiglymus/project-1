@@ -33,14 +33,14 @@ const exampleFamily = {
 
 /* Prepopulated Insects */
 const seedInsects = [{
-  commonName: 'Western Honey Bee',
-  scientificName: 'Apis Mellifera',
+  commonName: 'western honey bee',
+  scientificName: 'apis mellifera',
   familyName: 'Apidae',
   description: `These are probably the bees you're thinking of when you think of honey bees.`,
 },
 {
-  commonName: 'Common Red Ant',
-  scientificName: 'Myrmica Rubra',
+  commonName: 'common red ant',
+  scientificName: 'myrmica rubra',
   familyName: 'Formicidae',
   description: 'Small red ants found in backyards everywhere.'
 }
@@ -117,7 +117,7 @@ db.Family.deleteMany({}, (err, removedFamilies)=>{
     //for loop for insects
     for (let i = 0; i < seedInsects.length; i++) {
       let wikiItem = seedInsects[i];
-      let title = wikiItem.commonName;
+      let title = wikiItem.scientificName;
 
       let getRequest = {
         method: 'GET',

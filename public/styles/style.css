@@ -168,6 +168,7 @@ input[type=submit] {
 
 input[type=submit]:hover {
   font-weight: 500;
+  background-color: #517957;
 }
 
 /* Header*/
@@ -203,7 +204,7 @@ header h3 {
 /* Footer */
 footer {
   text-align: center;
-  background-color: #709F74;
+  background-color: #517957;
   color: #F7F9F3;
 }
 

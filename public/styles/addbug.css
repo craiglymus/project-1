@@ -6,6 +6,13 @@ body {
     background-size: 100% 100%;
 }
 
+.addBug {
+  text-align: center;
+  font-size: 2em;
+  color: #F7F9F3;
+  margin-top: -10px;
+}
+
 input[type=submit] {
   text-align: center;
   padding: 20px;
@@ -71,4 +78,11 @@ h2{
 
 #addBug input{
   margin-bottom: 1em;
+}
+
+.submitB {
+  width: 15em;
+  height: 3em;
+  margin: 50px: 
+
 }

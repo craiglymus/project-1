@@ -25,18 +25,31 @@ const render = (insect) =>{
   $('.bugData').append(`
     <div class="insect" id="${insect._id}">
       <img src="${insect.image}">
-      <p>${insect.commonName}</p>
-      <p>${insect.scientificName}</p>
-      <p>${insect.familyName}</p>
-      <p>${insect.description}</p>
-      <p>${insect.summary}</p>
+
+      <div class="insect-info-container">
+        <p>${insect.commonName}</p>
+        <p>${insect.scientificName}</p>
+        <p>${insect.familyName}</p>
+        <p>${insect.description}</p>
+        <p>${insect.summary}</p>
+      </div>
+
+      <form class="hidden-form edit-form">
+        <input id="insectEditCommonName" type="text" name="commonName" value="${insect.commonName}">
+        <input id="insectEditScientificName" type="text" name="scientificName" value="${insect.scientificName}">
+        <input id="insectEditFamilyName" type="text" name="familyName" value="${insect.familyName}">
+        <input id="insectEditDescription" type="text" name="description" value="${insect.description}">
+        <input id="insectEditSummary" type="text" name="summary" value="${insect.summary}">
+        <input type="submit" value="Edit this bug!">
+      </form>
+
       <i class="edit fas fa-edit"></i>
       <i class="delete fas fa-trash-alt"></i>
     </div>`)
 }
 
 //Searches for an individual bug by its common name
-const searchByName =(name)=>{
+const searchByName = (name) => {
   name = name.toLowerCase();
   console.log(`asking for ${name}`);
   $.ajax({
@@ -50,7 +63,7 @@ const searchByName =(name)=>{
       } else {
         $('.bugData').html(`
           <h1>Sorry, we couldn't find what you were looking for!</h1>
-          `);
+        `);
       }
     }
   })
@@ -87,13 +100,13 @@ $('#addBug').on('submit', (e)=>{
     url: `${wikiBaseUrl}${title}`,
     success: (response) =>{
       if (response.content_urls) addedBug.link = response.content_urls.desktop.page
-      if(response.extract) addedBug.summary = response.extract;
-      if(response.originalimage.source) addedBug.image = response.originalimage.source;
+      if (response.extract) addedBug.summary = response.extract;
+      if (response.originalimage.source) addedBug.image = response.originalimage.source;
       $.ajax({
         method: 'POST',
         url: '/api/insects',
         data: addedBug,
-        success: (response)=>{
+        success: (response) => {
           $('.submitted').show();
         },
         error: ()=>{
@@ -109,8 +122,49 @@ $('#addBug').on('submit', (e)=>{
 });
 
 //Create edit function on entries
+$(document).on('click', '.edit', (e) => {
+  e.preventDefault();
+  // capture the bug ID
+  let id = e.target.parentElement.id;
 
+  // hide .insect-info-container
+  $(`#${id}`).children()[1].style.display = "none";
+  $(`#${id}`).children()[2].style.display = "block";
+});
 
+$(document).on('submit', '.edit-form', (e) => {
+  e.preventDefault();
+  let id = e.target.parentElement.id;
+
+  let insectEditCommonName = $('#insectEditCommonName').val();
+  let insectEditScientificName = $('#insectEditScientificName').val();
+  let insectEditFamilyName = $('#insectEditFamilyName').val();
+  let insectEditDescription = $('#insectEditDescription').val();
+  let insectEditSummary = $('#insectEditSummary').val();
+
+  let editFormData = {
+    commonName: insectEditCommonName,
+    scientificName: insectEditScientificName,
+    familyName: insectEditFamilyName,
+    description: insectEditDescription,
+    summary: insectEditSummary
+  }
+
+  $.ajax({
+    method: "PUT",
+    url: `/api/insects/${id}`,
+    data: editFormData,
+    success: (response) => {
+      console.log("success");
+    },
+    error: (err) => {
+      console.log("no success");
+    },
+    complete: (response) => {
+      console.log("ajax has completed!");
+    }
+  })
+})
 
 //Delete
 $(document).on('click', '.delete', (e) => {

@@ -75,7 +75,6 @@ app.get('/api/insects/:name', (req, res)=>{
 })
 
 //Create: Creates new insect entry
-
 app.post('/api/insects', (req, res) => {
   let insectData = req.body;
   console.log (`posting ${insectData}`);
@@ -93,6 +92,8 @@ app.post('/api/insects', (req, res) => {
         if(err) throw err;
         console.log(`Saved ${savedInsect}`)
       });
+
+      res.json(savedFamily)
     });
   })
 });
@@ -110,6 +111,13 @@ app.delete(`/api/insects/:id`, (req, res) => {
 
 //Update: Edits existing insect entry
 
+app.put(`/api/insects/:id`, (req, res) => {
+  let insectId = req.params.id;
+
+  db.Insect.findOneAndUpdate()
+});
+
+// Server should listen on some port
 app.listen(port, () => {
   console.log(`Bug app is listening on port:${port}`);
 })

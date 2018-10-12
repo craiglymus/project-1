@@ -62,6 +62,7 @@ ul {
   padding-left: none;
 }
 
+
 a {
   text-decoration: none;
   color: #F7F9F3;
@@ -73,6 +74,7 @@ a {
 a:hover {
   filter: brightness(100%);
 }
+
 
 /* Nav Bar */
 nav {
@@ -100,6 +102,8 @@ nav li {
 	margin: 30px;
 	padding: 0px;
 	margin-left: 30px;
+  text-decoration: none;
+
 }
 
 /* Hamburger */
@@ -153,6 +157,7 @@ input {
   font-size: 1em;
 }
 
+
 input[type=submit] {
   text-align: center;
   padding: 20px;
@@ -162,7 +167,7 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-
+  font-weight: 500;
 }
 
 /* Header*/
@@ -198,24 +203,21 @@ header h3 {
 /* Footer */
 footer {
   text-align: center;
-  background-color: #F7F9F3;
-  color: #263439;
+  background-color: #709F74;
+  color: #F7F9F3;
 }
 
-/* Introduction */
+/* About Us / Contact Form */
 
 .introduction {
   color: #263439;
+  background-color: #D2A431;
 }
 
 .about {
   color: #263439;
 }
-/* About Us / Contact Form */
-.aboutContact {
-  background-color: #D2A431;
-  color: #263439;
-}
+
 .profiles {
   display: flex;
   flex-flow: row wrap;
@@ -230,62 +232,6 @@ footer {
   display: block;
   max-width: 100%;
   margin: 0 auto;
-}
-
-/* Add a Bug Page */
-.submitted {
-  display: none;
-}
-
-.addBugForm{
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-}
-
-#addBug {
-  background-color: #709F74;
-  padding: 3em;
-  max-width: 950px;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  justify-content: center;
-}
-
-.addBugNames{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.addBugNames input{
-  width: 30%;
-}
-
-#addBug {
-
-}
-
-h2{
-  border-radius: 2px;
-  border: 0;
-  padding: 10px 25px;
-  border-radius: 2px;
-  height: 2em;
-}
-
-#addBug textarea{
-    width: inherit;
-    margin-bottom: 1em;
-
-}
-
-#addBug input{
-  margin-bottom: 1em;
 }
 
 /* Form */
@@ -304,7 +250,8 @@ light green: #D4E7B6;
 off white: #F7F9F3;
 
 */
-@media only screen and (max-width: 640px) {
+
+@media only screen and (max-width: 680px) {
   * {
     text-align: center;
   }
@@ -317,3 +264,7 @@ off white: #F7F9F3;
     display: block;
     margin: 1em 2em;
   }
+
+  nav ul {
+		display: none;
+	}

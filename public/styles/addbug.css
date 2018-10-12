@@ -1,0 +1,74 @@
+/* Add a Bug Page */
+
+body {
+  background-image: url("../images/bugLife.png");
+  background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+input[type=submit] {
+  text-align: center;
+  padding: 20px;
+  background-color: #F7F9F3;
+  font-size: 1em;
+  color: #709F74;
+}
+
+input[type=submit]:hover {
+  font-weight: 500;
+}
+.submitted {
+  display: none;
+}
+
+.addBugForm{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+#addBug {
+  background-color: #709F74;
+  padding: 3em;
+  max-width: 950px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  justify-content: center;
+}
+
+.addBugNames{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.addBugNames input{
+  width: 30%;
+}
+
+#addBug {
+
+}
+
+h2{
+  border-radius: 2px;
+  border: 0;
+  padding: 10px 25px;
+  border-radius: 2px;
+  height: 2em;
+}
+
+#addBug textarea{
+    width: inherit;
+    margin-bottom: 1em;
+    height: 150px;
+
+}
+
+#addBug input{
+  margin-bottom: 1em;
+}

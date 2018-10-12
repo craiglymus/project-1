@@ -68,10 +68,6 @@ $(document).on('click', '.delete', (e) => {
   });
 });
 
-$('.hamburger').on('click', ()=>{
-  $('.navLinks').slideToggle();
-})
-
 const setUp = () =>{
   $.ajax({
     method: 'GET',

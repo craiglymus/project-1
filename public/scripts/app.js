@@ -60,9 +60,9 @@ $('#search').on('submit', (e)=>{
   searchByName(searchName);
 })
 
-
+//Creates a new bug, drawing the information from Wikipedia.
 $('#addBug').on('submit', (e)=>{
-  e.preventDefault()
+  e.preventDefault();
   let addBugCommonName = $('#addBugCommonName').val().toLowerCase();
   let addBugScientificName = $('#addBugScientificName').val().toLowerCase();
   let addBugFamilyName = $('#addBugFamilyName').val();
@@ -102,6 +102,46 @@ $('#addBug').on('submit', (e)=>{
   });
 
 });
+
+//Creates a new family, drawing on wikipedia
+
+$('#addFamily').on('submit', (e)=>{
+  e.preventDefault()
+  let addFamilyName = $('#addFamilyName').val();
+  let addedFamily = {
+    name = addFamilyName;
+  };
+
+  let title = addFamilyName;
+  title = title.trim().split(' ').join('_');
+
+  $.ajax({
+    method: 'GET',
+    url: `${wikiBaseUrl}${title}`,
+    success: (response) =>{
+      if (response.content_urls) addedFamily.link = response.content_urls.desktop.page
+      if(response.extract) addedFamily.summary = response.extract;
+      if(response.originalimage.source) addedFamily.image = response.originalimage.source;
+      $.ajax({
+        method: 'POST',
+        url: '/api/families',
+        data: addedFamily,
+        success: (response)=>{
+          $('.submitted').show();
+        },
+        error: (err) =>{
+          $('.submitted').html(`An error occurred. Please check your spelling.`);
+
+        }
+      })
+    },
+    error: (err) =>{
+      console.log('Error occurred');
+    }
+  });
+
+});
+
 
 // Create edit function on entries
 $(document).on('click', '.edit', (e) => {

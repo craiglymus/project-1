@@ -1,29 +1,10 @@
 /* Populates seed data with Wikipedia summary and image, using MediaWiki's API */
 const wikiBaseUrl = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
 
-/* Returns the top photo from the article. */
-const getWiki = (item) =>{
-  let title = item.commonName ? item.commonName : item.scientificName;
-  title = title.trim().split(' ').join('_');
-  $.ajax({
-    method: 'GET',
-    url: `${wikiBaseUrl}${title}`,
-    success: (response) =>{
-      console.log(response);
-      let summary = response.extract;
-      let image = response.originalimage.source
-      title.summary = summary;
-      image.summary = image;
-    },
-    error: (err) =>{
-      console.log('Error occurred');
-    }
-  });
-}
-
+//Renders an insect's information, with a form to edit it.
 const render = (insect) =>{
   console.log(insect);
-  $('.bugData').append(`
+  $('.bugData').prepend(`
     <div class="insect" id="${insect._id}">
       <img src="${insect.image}">
 
@@ -36,11 +17,10 @@ const render = (insect) =>{
       </div>
 
       <form class="hidden-form edit-form">
-        <input id="insectEditCommonName" type="text" name="commonName" value="${insect.commonName}">
-        <input id="insectEditScientificName" type="text" name="scientificName" value="${insect.scientificName}">
-        <input id="insectEditFamilyName" type="text" name="familyName" value="${insect.familyName}">
-        <input id="insectEditDescription" type="text" name="description" value="${insect.description}">
-        <input id="insectEditSummary" type="text" name="summary" value="${insect.summary}">
+        <input id="editBugCommonName" type="text" name="commonName" value="${insect.commonName}">
+        <input id="editBugScientificName" type="text" name="scientificName" value="${insect.scientificName}">
+        <input id="editBugFamilyName" type="text" name="familyName" value="${insect.familyName}">
+        <input id="editBugDescription" type="text" name="description" value="${insect.description}">
         <input type="submit" value="Edit this bug!">
       </form>
 
@@ -55,12 +35,15 @@ const searchByName = (name) => {
   console.log(`asking for ${name}`);
   $.ajax({
     method: 'GET',
-    url: `/api/insects/${name}`,
+    url: `/api/insects/species/${name}`,
     success: (response) =>{
       $('.bugData').html('');
       console.log(response)
       if(response !== null){
-        render(response);
+        //Allows for return of multiple items if partial match
+        for(let i = 0; i< response.length; i++){
+          render(response[i]);
+        }
       } else {
         $('.bugData').html(`
           <h1>Sorry, we couldn't find what you were looking for!</h1>
@@ -68,27 +51,44 @@ const searchByName = (name) => {
       }
     }
   })
-});
+};
+
+$('#search').on('submit', (e)=>{
+  e.preventDefault();
+  let searchName = $('#searchName').val();
+  console.log(`asking for ${searchName}`)
+  searchByName(searchName);
+})
 
 
 $('#addBug').on('submit', (e)=>{
   e.preventDefault()
+  let addBugCommonName = $('#addBugCommonName').val().toLowerCase();
+  let addBugScientificName = $('#addBugScientificName').val().toLowerCase();
+  let addBugFamilyName = $('#addBugFamilyName').val();
   let addBugDescription = $('#addBugDescription').val();
   let addedBug = {
+    commonName: addBugCommonName.toLowerCase(),
+    scientificName: addBugScientificName.toLowerCase(),
+    familyName: addBugFamilyName,
     description: addBugDescription
   };
+
+  let title = addedBug.commonName ? addedBug.commonName : addedBug.scientificName;
+  title = title.trim().split(' ').join('_');
+
   $.ajax({
     method: 'GET',
     url: `${wikiBaseUrl}${title}`,
     success: (response) =>{
       if (response.content_urls) addedBug.link = response.content_urls.desktop.page
-      if (response.extract) addedBug.summary = response.extract;
-      if (response.originalimage.source) addedBug.image = response.originalimage.source;
+      if(response.extract) addedBug.summary = response.extract;
+      if(response.originalimage.source) addedBug.image = response.originalimage.source;
       $.ajax({
         method: 'POST',
         url: '/api/insects',
         data: addedBug,
-        success: (response) => {
+        success: (response)=>{
           $('.submitted').show();
         },
         error: ()=>{
@@ -96,10 +96,11 @@ $('#addBug').on('submit', (e)=>{
         }
       })
     },
-    error: ()=>{
-      console.log('Error');
+    error: (err) =>{
+      console.log('Error occurred');
     }
-  })
+  });
+
 });
 
 // Create edit function on entries
@@ -109,8 +110,8 @@ $(document).on('click', '.edit', (e) => {
   let id = e.target.parentElement.id;
 
   // hide .insect-info-container
-  $(`#${id}`).children()[1].style.display = "none";
-  $(`#${id}`).children()[2].style.display = "block";
+  $(`#${id}`).children('.insect-info-container').hide();
+  $(`#${id}`).find('.edit-form').show();
 });
 
 // Stop form event from submitting, handle update with AJAX
@@ -118,26 +119,35 @@ $(document).on('submit', '.edit-form', (e) => {
   e.preventDefault();
   let id = e.target.parentElement.id;
 
-  let insectEditCommonName = $('#insectEditCommonName').val();
-  let insectEditScientificName = $('#insectEditScientificName').val();
-  let insectEditFamilyName = $('#insectEditFamilyName').val();
-  let insectEditDescription = $('#insectEditDescription').val();
-  let insectEditSummary = $('#insectEditSummary').val();
+  let editBugCommonName = $('#editBugCommonName').val();
+  let editBugScientificName = $('#editBugScientificName').val();
+  let editBugFamilyName = $('#editBugFamilyName').val();
+  let editBugDescription = $('#editBugDescription').val();
+  let editBugSummary = $('#editBugSummary').val();
 
   let editFormData = {
-    commonName: insectEditCommonName,
-    scientificName: insectEditScientificName,
-    familyName: insectEditFamilyName,
-    description: insectEditDescription,
-    summary: insectEditSummary
+    commonName: editBugCommonName,
+    scientificName: editBugScientificName,
+    familyName: editBugFamilyName,
+    description: editBugDescription,
+    summary: editBugSummary
   }
+
+  console.log(`putting ${editFormData}`)
 
   $.ajax({
     method: "PUT",
     url: `/api/insects/${id}`,
     data: editFormData,
     success: (response) => {
-      console.log("success");
+      $.ajax({
+        method: 'GET',
+        url: `/api/insects/${id}`,
+        success: (response)=>{
+          $(`#${id}`).remove();
+          render(response);
+        }
+      })
     },
     error: (err) => {
       console.log("no success");
@@ -147,6 +157,7 @@ $(document).on('submit', '.edit-form', (e) => {
     }
   })
 });
+
 
 //Delete
 $(document).on('click', '.delete', (e) => {
@@ -166,10 +177,6 @@ $(document).on('click', '.delete', (e) => {
   });
 });
 
-$('.hamburger').on('click', ()=>{
-  $('.navLinks').slideToggle();
-})
-
 const setUp = () =>{
   $.ajax({
     method: 'GET',
@@ -180,5 +187,16 @@ const setUp = () =>{
       }
     }
   });
+
+  //Populates dropdown menu in form to reflect Family Data
+$.ajax({
+  method: 'GET',
+  url: '/api/families',
+  success: (response)=>{
+    for(let i = 0; i < response.length; i++){
+      $('#addBugFamilyName').append(`<option value="${response[i].name}">${response[i].name}</option>`);
+    }
+  }
+});
 }
 setUp();

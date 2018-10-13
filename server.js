@@ -35,6 +35,13 @@ app.get('/addbug', (req, res) => {
   res.sendFile('/views/addbug.html', {root: __dirname});
 });
 
+//Search Routes
+
+app.get('/search', (req, res) =>{
+  res.sendFile('/views/search.html', {root: __dirname});
+})
+
+
 
 //Read: Get all insects in database
 
@@ -46,6 +53,13 @@ app.get('/api/insects', (req, res) => {
              res.json(insects)
            });
 });
+
+app.get('/api/insects/:id', (req, res)=>{
+  db.Insect.findOne({_id : req.params.id}, (err, foundInsect) =>{
+    if (err) throw err;
+    res.json(foundInsect);
+  })
+})
 
 // Read: Get all families in database
 
@@ -59,7 +73,15 @@ app.get('/api/families', (req, res) => {
 });
 
 
-//Read: Gets individual insect entry by id
+//Read: Returns all insect queries that share the user's query in their common name
+app.get('/api/insects/species/:name', (req, res)=>{
+  console.log(`looking for ${req.params.name}`)
+  let searchName = req.params.name;
+  db.Insect.find({ commonName: new RegExp(searchName,"i")}, (err, foundInsect) =>{
+    if (err) throw err;
+    res.json(foundInsect);
+  })
+})
 
 //Create: Creates new insect entry
 app.post('/api/insects', (req, res) => {
@@ -99,6 +121,7 @@ app.delete('/api/insects/:id', (req, res) => {
 //Update: Edits existing insect entry
 app.put(`/api/insects/:id`, (req, res) => {
   let insectId = req.params.id;
+  console.log(`Editing: ${req.body}`)
 
   db.Insect.findOneAndUpdate({ _id: insectId }, req.body, (err, updatedInsect) => {
     console.log("success!")

@@ -53,7 +53,6 @@ const seedInsects = [{
   - Create the family records
   - Create insect records
   - Iterate through insects and associate family to insects and vice versa.
-
 */
 
 //An Array that holds all of the family objects (may delete later)
@@ -155,6 +154,3 @@ db.Family.deleteMany({}, (err, removedFamilies)=>{
     }
   });
 })
-
-
-/* Seeds the insect data and populates it with wikipedia data*/

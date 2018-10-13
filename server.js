@@ -35,6 +35,13 @@ app.get('/addbug', (req, res) => {
   res.sendFile('/views/addbug.html', {root: __dirname});
 });
 
+//Search Routes
+
+app.get('/search', (req, res) =>{
+  res.sendFile('/views/search.html', {root: __dirname});
+})
+
+
 
 //Read: Get all insects in database
 
@@ -59,7 +66,14 @@ app.get('/api/families', (req, res) => {
 });
 
 
-//Read: Gets individual insect entry by id
+//Read: Returns all insect queries that share a common name
+app.get('/api/insects/:name', (req, res)=>{
+  console.log(`looking for ${req.params.name}`)
+  db.Insect.findOne({commonName : req.params.name}, (err, foundInsect) =>{
+    if (err) throw err;
+    res.json(foundInsect);
+  })
+})
 
 //Create: Creates new insect entry
 app.post('/api/insects', (req, res) => {

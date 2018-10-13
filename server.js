@@ -73,10 +73,11 @@ app.get('/api/families', (req, res) => {
 });
 
 
-//Read: Returns all insect queries that share a common name
-app.get('/api/insects/:name', (req, res)=>{
+//Read: Returns all insect queries that share the user's query in their common name
+app.get('/api/insects/species/:name', (req, res)=>{
   console.log(`looking for ${req.params.name}`)
-  db.Insect.findOne({commonName : req.params.name}, (err, foundInsect) =>{
+  let searchName = req.params.name;
+  db.Insect.find({ commonName: new RegExp(searchName,"i")}, (err, foundInsect) =>{
     if (err) throw err;
     res.json(foundInsect);
   })

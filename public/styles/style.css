@@ -179,6 +179,18 @@ input[type=submit]:hover {
   background-color: #517957;
 }
 
+button{
+    border-radius: 2px;
+    border: 0;
+    padding: 10px 25px;
+    border-radius: 2px;
+    padding: 10px 25px;
+    text-align: center;
+    background-color: #709F74;
+    font-size: 1em;
+    color: #F7F9F3;
+}
+
 /* Header*/
 header {
   height: 100vh;

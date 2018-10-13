@@ -69,7 +69,6 @@ const addWikiToFamilies = (families) => {
     };
 
     let title = wikiItem.name;
-    console.log(title);
     let getRequest = {
       method: 'GET',
       url: `${wikiBaseUrl}${title}`,
@@ -95,12 +94,10 @@ const addWikiToFamilies = (families) => {
 
           //Creates a family document.
           db.Family.create(wikiItem, (err, savedFamily) => {
-            console.log(`saved family ${savedFamily}`);
           });
         }
       })
       .on('end', () => {
-        console.log(`families: ${seedFamilies}`);
       })
   }
 }
@@ -140,12 +137,10 @@ db.Family.deleteMany({}, (err, removedFamilies)=>{
             savedFamily.insects.push(savedInsect);
             savedFamily.save((err, savedFamily)=>{
               if (err) throw err;
-              console.log(`Saved ${savedFamily}`)
             });
             savedInsect.family = savedFamily;
             savedInsect.save((err, savedInsect)=>{
               if(err) throw err;
-              console.log(`Saved ${savedInsect}`)
             });
           });
         });

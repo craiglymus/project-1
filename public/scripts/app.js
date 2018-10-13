@@ -35,12 +35,15 @@ const searchByName = (name) => {
   console.log(`asking for ${name}`);
   $.ajax({
     method: 'GET',
-    url: `/api/insects/${name}`,
+    url: `/api/insects/species/${name}`,
     success: (response) =>{
       $('.bugData').html('');
       console.log(response)
       if(response !== null){
-        render(response);
+        //Allows for return of multiple items if partial match
+        for(let i = 0; i< response.length; i++){
+          render(response[i]);
+        }
       } else {
         $('.bugData').html(`
           <h1>Sorry, we couldn't find what you were looking for!</h1>
@@ -60,8 +63,8 @@ $('#search').on('submit', (e)=>{
 
 $('#addBug').on('submit', (e)=>{
   e.preventDefault()
-  let addBugCommonName = $('#addBugCommonName').val();
-  let addBugScientificName = $('#addBugScientificName').val();
+  let addBugCommonName = $('#addBugCommonName').val().toLowerCase();
+  let addBugScientificName = $('#addBugScientificName').val().toLowerCase();
   let addBugFamilyName = $('#addBugFamilyName').val();
   let addBugDescription = $('#addBugDescription').val();
   let addedBug = {

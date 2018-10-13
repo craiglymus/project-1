@@ -110,11 +110,13 @@ app.delete(`/api/insects/:id`, (req, res) => {
 });
 
 //Update: Edits existing insect entry
-
 app.put(`/api/insects/:id`, (req, res) => {
   let insectId = req.params.id;
 
-  db.Insect.findOneAndUpdate()
+  db.Insect.findOneAndUpdate({ _id: insectId }, req.body, (err, updatedInsect) => {
+    console.log("success!")
+    res.json(updatedInsect);
+  });
 });
 
 // Server should listen on some port

@@ -121,7 +121,7 @@ $('#addBug').on('submit', (e)=>{
 
 });
 
-//Create edit function on entries
+// Create edit function on entries
 $(document).on('click', '.edit', (e) => {
   e.preventDefault();
   // capture the bug ID
@@ -132,6 +132,7 @@ $(document).on('click', '.edit', (e) => {
   $(`#${id}`).children()[2].style.display = "block";
 });
 
+// Stop form event from submitting, handle update with AJAX
 $(document).on('submit', '.edit-form', (e) => {
   e.preventDefault();
   let id = e.target.parentElement.id;
@@ -164,7 +165,7 @@ $(document).on('submit', '.edit-form', (e) => {
       console.log("ajax has completed!");
     }
   })
-})
+});
 
 //Delete
 $(document).on('click', '.delete', (e) => {

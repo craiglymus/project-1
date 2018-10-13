@@ -244,6 +244,11 @@ footer {
   margin: 0 auto;
 }
 
+/* Search Page stuff here */
+.hidden-form {
+  display: none;
+}
+
 /* Form */
 /* COLORS PALETTE
 

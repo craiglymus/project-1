@@ -62,13 +62,26 @@ app.get('/api/families', (req, res) => {
 //Read: Gets individual insect entry by id
 
 //Create: Creates new insect entry
-
 app.post('/api/insects', (req, res) => {
   let insectData = req.body;
   console.log (`posting ${insectData}`);
   db.Insect.create(insectData, (err, savedInsect) => {
     if (err) throw err;
-    res.json(savedInsect);
+    db.Family.findOne({name: insectData.familyName}, (err, savedFamily) => {
+      if (err) throw err;
+      savedFamily.insects.push(savedInsect);
+      savedFamily.save((err, savedFamily)=>{
+        if (err) throw err;
+        console.log(`Saved ${savedFamily}`)
+      });
+      savedInsect.family = savedFamily;
+      savedInsect.save((err, savedInsect)=>{
+        if(err) throw err;
+        console.log(`Saved ${savedInsect}`)
+      });
+
+      res.json(savedFamily)
+    });
   })
 });
 
@@ -84,18 +97,16 @@ app.delete('/api/insects/:id', (req, res) => {
 });
 
 //Update: Edits existing insect entry
- app.put('/api/insects/:id', (req, res) => {
+app.put(`/api/insects/:id`, (req, res) => {
   let insectId = req.params.id;
-  let updateBody = req.body;
-  db.Insect.findOneAndUpdate({_id: insectId}, updateBody, (err, updatedInsect) => {
-    if (err) throw err;
-    console.log(`updated ${updatedInsect}`);
+
+  db.Insect.findOneAndUpdate({ _id: insectId }, req.body, (err, updatedInsect) => {
+    console.log("success!")
     res.json(updatedInsect);
-  })
+  });
 });
 
-
-
+// Server should listen on some port
 app.listen(port, () => {
   console.log(`Bug app is listening on port:${port}`);
 })

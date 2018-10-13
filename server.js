@@ -5,7 +5,7 @@ const db = require('./models');
 
 const port = process.env.PORT || 3000;
 
-
+//Parses json to url
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({
   extended: true

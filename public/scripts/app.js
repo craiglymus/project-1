@@ -1,28 +1,10 @@
 /* Populates seed data with Wikipedia summary and image, using MediaWiki's API */
 const wikiBaseUrl = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
 
-// const getWiki = (item) =>{
-//   let title = item.commonName ? item.commonName : item.scientificName;
-//   title = title.trim().split(' ').join('_');
-//   $.ajax({
-//     method: 'GET',
-//     url: `${wikiBaseUrl}${title}`,
-//     success: (response) =>{
-//       console.log(response);
-//       let summary = response.extract;
-//       let image = response.originalimage.source
-//       title.summary = summary;
-//       image.summary = image;
-//     },
-//     error: (err) =>{
-//       console.log('Error occurred');
-//     }
-//   });
-// }
-
+//Renders an insect's information, with a form to edit it.
 const render = (insect) =>{
   console.log(insect);
-  $('.bugData').append(`
+  $('.bugData').prepend(`
     <div class="insect" id="${insect._id}">
       <img src="${insect.image}">
 
@@ -117,6 +99,7 @@ $('#addBug').on('submit', (e)=>{
   });
 
 });
+
 // Create edit function on entries
 $(document).on('click', '.edit', (e) => {
   e.preventDefault();
@@ -124,8 +107,8 @@ $(document).on('click', '.edit', (e) => {
   let id = e.target.parentElement.id;
 
   // hide .insect-info-container
-  $(`#${id}`).children()[1].style.display = "none";
-  $(`#${id}`).children()[2].style.display = "block";
+  $(`#${id}`).children('.insect-info-container').hide();
+  $(`#${id}`).find('.edit-form').show();
 });
 
 // Stop form event from submitting, handle update with AJAX
@@ -137,19 +120,31 @@ $(document).on('submit', '.edit-form', (e) => {
   let editBugScientificName = $('#editBugScientificName').val();
   let editBugFamilyName = $('#editBugFamilyName').val();
   let editBugDescription = $('#editBugDescription').val();
+  let editBugSummary = $('#editBugSummary').val();
+
   let editFormData = {
     commonName: editBugCommonName,
     scientificName: editBugScientificName,
     familyName: editBugFamilyName,
     description: editBugDescription,
+    summary: editBugSummary
   }
+
+  console.log(`putting ${editFormData}`)
 
   $.ajax({
     method: "PUT",
     url: `/api/insects/${id}`,
     data: editFormData,
     success: (response) => {
-      console.log("success");
+      $.ajax({
+        method: 'GET',
+        url: `/api/insects/${id}`,
+        success: (response)=>{
+          $(`#${id}`).remove();
+          render(response);
+        }
+      })
     },
     error: (err) => {
       console.log("no success");
@@ -159,6 +154,7 @@ $(document).on('submit', '.edit-form', (e) => {
     }
   })
 });
+
 
 //Delete
 $(document).on('click', '.delete', (e) => {

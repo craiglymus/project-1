@@ -36,11 +36,15 @@
       <p class="addBug">Add A New Bug</p>
       <div class="addBugNames">
         <input type="text" id="addBugCommonName" name="commonName" placeholder="Common Name" />
+        <label for="commonName"></label>
         <input type="text" id="addBugScientificName" name="scientificName" placeholder="Scientific Name" />
+        <label for="scientificName"></label>
         <select name="familyName" id="addBugFamilyName"></select>
+        <label for="familyName"></label>
       </div>
 
       <textarea id="addBugDescription" name="description" placeholder="Description"></textarea>
+      <label for="description"></label>
 
       <input type="submit" class="submitB" value="Submit" />
     </form>
@@ -50,6 +54,7 @@
     <form id="addFamily">
       <p>Are we missing a family?</p>
       <input type="text" id="addFamilyName" name="name" placeholder="Family Name" />
+      <label for="name"></label>
       <input type="submit" />
     </form>
   </section>

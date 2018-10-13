@@ -35,13 +35,17 @@ app.get('/addbug', (req, res) => {
   res.sendFile('/views/addbug.html', {root: __dirname});
 });
 
-//Search Routes
+//Search Route
 
 app.get('/search', (req, res) =>{
   res.sendFile('/views/search.html', {root: __dirname});
 })
 
+//API Documentation Route
 
+app.get('/documentation', (req, res)=>{
+  res.sendFile('/views/documentation.html', {root: __dirname});
+})
 
 //Read: Get all insects in database
 
@@ -106,6 +110,16 @@ app.post('/api/insects', (req, res) => {
     });
   })
 });
+
+//Create: Creates a new family
+app.post('/api/families', (res, req) =>{
+  let familyName = req.body.name;
+  db.Family.create({name: familyName}, (err, savedFamily) =>{
+    if(err) throw err;
+    console.log(`Saved ${savedFamily}`);
+    res.json(savedFamily);
+  })
+})
 
 //Delete: Destroys existing insect entry
 

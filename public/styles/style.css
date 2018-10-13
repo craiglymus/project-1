@@ -75,6 +75,10 @@ a:hover {
   filter: brightness(100%);
 }
 
+/* Helper classes */
+.mobile-only {
+  display: none;
+}
 
 /* Nav Bar */
 nav {
@@ -86,7 +90,7 @@ nav {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 999;
+  z-index: 10;
 }
 
 nav li {
@@ -131,12 +135,16 @@ nav .navLinks {
   position: absolute;
   right: 0;
   top: 50%;
-  z-index: 998;
+  z-index: 9;
   text-align: center;
 }
 
 nav .navLinks li {
   display: inline-block;
+}
+
+nav .navLinks li.mobile-only {
+  display: none;
 }
 
 input {
@@ -183,6 +191,7 @@ header {
   background-attachment: fixed;
   background-position: center;
   background-image: url("../images/bugLife.png");
+  position: relative;
 }
 
 header h1 {
@@ -257,15 +266,48 @@ off white: #F7F9F3;
     text-align: center;
   }
 
+  .mobile-only {
+    display: block;
+  }
+
   .profiles div {
     width: 100%;
+  }
+
+  .logo {
+    position: relative;
+    z-index: 9;
   }
 
   .hamburger {
     display: block;
     margin: 1em 2em;
+    z-index: 9;
   }
 
-  nav ul {
-		display: none;
+  nav .navLinks {
+		left: 0;
+    right: 0;
+    padding: 0;
+    opacity: 0;
+    top: -120px;
+    transition: top 0.3s ease, opacity 0.3s ease;
+    z-index: 8;
 	}
+
+  nav .navLinks.show {
+    top: 165px;
+    opacity: 1;
+  }
+
+  nav .navLinks li {
+    background-color: #517957;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+  }
+
+  section h2 {
+    text-align: center;
+  }
+}

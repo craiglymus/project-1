@@ -58,6 +58,7 @@ app.get('/api/insects', (req, res) => {
            });
 });
 
+//Read: Gets an individual insect by ID
 app.get('/api/insects/:id', (req, res)=>{
   db.Insect.findOne({_id : req.params.id}, (err, foundInsect) =>{
     if (err) throw err;

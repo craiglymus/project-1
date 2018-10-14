@@ -1,4 +1,4 @@
-# <BRAND NAME>
+# Bug Bouty
 General Assembly Web Development Immersive Project 1
 By Craig Lymus, Natasha Quijano, & Tay Solis
 

@@ -106,10 +106,10 @@ $('#addBug').on('submit', (e)=>{
 //Creates a new family, drawing on wikipedia
 
 $('#addFamily').on('submit', (e)=>{
-  e.preventDefault()
+  e.preventDefault();
   let addFamilyName = $('#addFamilyName').val();
   let addedFamily = {
-    name = addFamilyName;
+    name: addFamilyName
   };
 
   let title = addFamilyName;
@@ -118,7 +118,7 @@ $('#addFamily').on('submit', (e)=>{
   $.ajax({
     method: 'GET',
     url: `${wikiBaseUrl}${title}`,
-    success: (response) =>{
+    success: (response) => {
       if (response.content_urls) addedFamily.link = response.content_urls.desktop.page
       if(response.extract) addedFamily.summary = response.extract;
       if(response.originalimage.source) addedFamily.image = response.originalimage.source;
@@ -130,13 +130,13 @@ $('#addFamily').on('submit', (e)=>{
           $('.submitted').show();
         },
         error: (err) =>{
-          $('.submitted').html(`An error occurred. Please check your spelling.`);
+          console.log(err);
 
         }
       })
     },
     error: (err) =>{
-      console.log('Error occurred');
+      $('.submitted').html(`An error occurred. Please check your spelling.`);
     }
   });
 

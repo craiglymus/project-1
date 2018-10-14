@@ -84,8 +84,8 @@ app.get('/api/insects/species/:name', (req, res)=>{
   db.Insect.find({ commonName: new RegExp(searchName,"i")}, (err, foundInsect) =>{
     if (err) throw err;
     res.json(foundInsect);
-  })
-})
+  });
+});
 
 //Create: Creates new insect entry
 app.post('/api/insects', (req, res) => {
@@ -138,6 +138,7 @@ app.put(`/api/insects/:id`, (req, res) => {
   console.log(`Editing: ${req.body}`)
 
   db.Insect.findOneAndUpdate({ _id: insectId }, req.body, (err, updatedInsect) => {
+    if (err) throw err;
     console.log("success!")
     res.json(updatedInsect);
   });

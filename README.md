@@ -1,4 +1,4 @@
-# <BRAND NAME>
+# Bug Bouty
 General Assembly Web Development Immersive Project 1
 By Craig Lymus, Natasha Quijano, & Tay Solis
 
@@ -21,7 +21,7 @@ Species in the database are organized by Family.
 Users will be able to get entries from the entire database or by family. Users will also be able to retrieve individual insect information by common/scientific name of insect.
 
 **Intuitive Website**
-Users will be able to interface with our database through <URL>, providing an easy way to search and contribute to the database.
+Users will be able to interface with our database through our easy to use search engine. Users can also contribute to the database by adding, editing, and deleting entries.
 
 **Wikipedia Integration**
 Entries in the database are supplemented with information pulled from MediaWiki's API. This means that species information as well as professional quality photos are pre-populated.
@@ -44,13 +44,18 @@ Entries in the database are supplemented with information pulled from MediaWiki'
   },
   {
     method: 'GET',
+    path: '/api/families',
+    description: 'Returns all insects by family'
+  },
+  {
+    method: 'GET',
     path: '/api/insects/:id',
     description: 'Returns an individual by id.'
   },
   {
     method: 'GET',
-    path: '/api/insects/:name',
-    description: 'Returns an individual insect by name. Accepts common and scientific names.'
+    path: '/api/insects/species/:name',
+    description: 'Returns an individual insect by common name.'
   },
   {
     method: 'PUT',
@@ -63,9 +68,34 @@ Entries in the database are supplemented with information pulled from MediaWiki'
     description: 'Adds an insect entry to the database'
   },
   {
+    method: 'POST',
+    path: '/api/families',
+    description: 'Adds a family entry to the database'
+  },
+  {
     method: 'DELETE',
     path: '/api/insects/:id',
     description: 'Destroys an existing entry'
   }
 ]
+```
+
+## Victories
+
+## Challenges
+
+## Highlights
+
+### Craig
+
+```Javascript
+```
+
+### Natasha
+```Javascript
+```
+
+### Tay
+
+```Javascript
 ```

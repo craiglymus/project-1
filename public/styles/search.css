@@ -1,0 +1,116 @@
+*{
+  box-sizing: border-box;
+}
+
+section {
+  padding: 2em;
+}
+
+.insect{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid #517957;
+  padding: .5em;
+  transition: all 0.3s ease;
+}
+
+.insect:hover{
+  padding: 1em;
+}
+.insect div{
+
+}
+
+.insect-info-container{
+  margin-left: 1.5em;
+  width: 69%;
+}
+
+.insect-info-container span{
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+img{
+  width: 300px;
+}
+
+.searchForm{
+  margin-top: 100px;
+  padding: 2em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.hidden-form{
+    width: 69%;
+    padding: 0 1.5em;
+}
+
+.hidden-form>*{
+  margin-bottom: 8px;
+}
+
+.hidden-form input[type=submit]{
+  margin: 6px auto;
+  padding: 10px 15px;
+  display: block;
+}
+
+.hidden-form input[type=text] {
+  color: #263439;
+  background-color: #F7F9F3;
+  border: 1px solid #709F74;
+  font-size: .75em;
+  width: 30%;
+  margin: 0 6px;
+}
+
+
+.editBugNames{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+
+.selectWrapper{
+  width: 30%;
+  margin: 0;
+  padding: 0;
+}
+
+select{
+  padding: 10px;
+  background-color: #F7F9F3;
+  font-size: .75em;
+  color: #263439;
+  border: 1px solid #709F74;
+}
+
+#editBugDescription{
+  height: 8em;
+  width: 100%;
+  background-color: #F7F9F3;
+  border: 1px solid #709F74;
+  font-size: .75em;
+  font-family: 'Roboto', sans-serif;
+  color:#263439;
+  padding: 10px;
+}
+
+@media only screen and (max-width: 680px){
+  .insect{
+    flex-direction: column;
+  }
+  .hidden-form input[type=text]{
+    width: 100%;
+  }
+  .selectWrapper{
+    width: 100%;
+  }
+}

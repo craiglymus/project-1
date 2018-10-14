@@ -1,3 +1,22 @@
+/* Form */
+/* COLORS PALETTE
+
+dark blue: #263439;
+
+gold: #D2A431;
+
+light gold: #ccb161;
+
+dark green: #517957;
+
+green: #709F74;
+
+light green: #D4E7B6;
+
+off white: #F7F9F3;
+
+*/
+
 @font-face {
   font-family: "Kiona";
   src: url("Kiona-Regular.ttf");
@@ -20,6 +39,7 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
+  font-size: 1.25em;
 }
 
 section {
@@ -33,12 +53,11 @@ img {
 
 /* Typography */
 h1, h2, h3 {
-  font-family: "Roboto", sans-serif;
+  font-family: "Kiona", sans-serif;
   text-align: center;
 }
 
 h1 {
-  font-family: "Kiona";
 }
 
 h2, h3 {
@@ -65,14 +84,24 @@ ul {
 
 a {
   text-decoration: none;
-  color: #F7F9F3;
+  color: #D2A431;
   filter: brightness(85%);
   font-weight: 300;
   transition: all 0.3s ease;
 }
 
-a:hover {
-  filter: brightness(100%);
+a:hover{
+  color: #f5d36e;
+}
+
+i{
+  font-size: 1.5em;
+  margin: 0 8px;
+  transition: all .3s ease;
+}
+
+i:hover{
+  color: #517957;
 }
 
 /* Helper classes */
@@ -90,20 +119,29 @@ nav {
   position: fixed;
   top: 0;
   width: 100%;
+  padding: .25em;
   z-index: 10;
 }
 
+
 nav li {
   text-decoration: none;
-  font-size: 1.5em;
-  padding: .5em;
+  font-size: 1.25em;
   margin-right: 22px;
+  line-height: 50px;
+}
+
+nav a{
+  color: #F7F9F3;
+}
+nav:hover {
+  filter: brightness(100%);
 }
 
 .logo {
 	width: 55px;
 	height: 69px;
-	margin: 30px;
+	margin: 8px;
 	padding: 0px;
 	margin-left: 30px;
   text-decoration: none;
@@ -161,7 +199,7 @@ input {
   margin-right: 1em;
   padding: 20px;
   background-color: #F7F9F3;
-  outline: 1px solid #709F74;
+  boder: 1px solid #709F74;
   font-size: 1em;
 }
 
@@ -190,6 +228,8 @@ button{
     font-size: 1em;
     color: #F7F9F3;
 }
+
+
 
 /* Header*/
 header {
@@ -232,12 +272,12 @@ footer {
 /* About Us / Contact Form */
 
 .introduction {
-  color: #263439;
-  background-color: #D2A431;
+  color: #F7F9F3;
+  background-color: #152f25;
 }
 
 .about {
-  color: #263439;
+  color: #F7F9F3;
 }
 
 .profiles {
@@ -261,22 +301,7 @@ footer {
   display: none;
 }
 
-/* Form */
-/* COLORS PALETTE
 
-dark blue: #263439;
-
-gold: #D2A431;
-
-dark green: #517957;
-
-green: #709F74;
-
-light green: #D4E7B6;
-
-off white: #F7F9F3;
-
-*/
 
 @media only screen and (max-width: 680px) {
   * {

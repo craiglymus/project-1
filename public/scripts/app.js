@@ -9,23 +9,29 @@ const render = (insect) =>{
       <img src="${insect.image}">
 
       <div class="insect-info-container">
+      <span class="names">
         <p>${insect.commonName}</p>
         <p>${insect.scientificName}</p>
         <p>${insect.familyName}</p>
+      </span>
         <p>${insect.description}</p>
         <p>${insect.summary}</p>
+        <i class="edit fas fa-edit"></i>
+        <i class="delete fas fa-trash-alt"></i>
       </div>
 
       <form class="hidden-form edit-form">
-        <input id="editBugCommonName" type="text" name="commonName" value="${insect.commonName}">
-        <input id="editBugScientificName" type="text" name="scientificName" value="${insect.scientificName}">
-        <input id="editBugFamilyName" type="text" name="familyName" value="${insect.familyName}">
-        <input id="editBugDescription" type="text" name="description" value="${insect.description}">
+        <div class="editBugNames">
+          <input id="editBugCommonName" type="text" name="commonName" value="${insect.commonName}">
+          <input id="editBugScientificName" type="text" name="scientificName" value="${insect.scientificName}">
+          <div class="selectWrapper">
+            <select name="familyName" id="addBugFamilyName" style="width:100%"></select>
+          </div>
+          <label for="familyName"></label>
+        </div>
+        <textarea id="editBugDescription" type="text" name="description" value="">${insect.description}</textarea>
         <input type="submit" value="Edit this bug!">
       </form>
-
-      <i class="edit fas fa-edit"></i>
-      <i class="delete fas fa-trash-alt"></i>
     </li>`)
 }
 
@@ -147,7 +153,8 @@ $('#addFamily').on('submit', (e)=>{
 $(document).on('click', '.edit', (e) => {
   e.preventDefault();
   // capture the bug ID
-  let id = e.target.parentElement.id;
+  let id = e.target.parentElement.parentElement.id;
+  console.log(id)
 
   // hide .insect-info-container
   $(`#${id}`).children('.insect-info-container').hide();

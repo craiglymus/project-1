@@ -1,5 +1,6 @@
 # Bug Bounty
 General Assembly Web Development Immersive Project 1
+
 By Craig Lymus, Natasha Quijano, & Tay Solis
 
 Bug Bounty is a searchable resource for bug lovers and curious minds to easily browse a database of bug species. Users can search for species and contribute to the database by adding and editing entries.

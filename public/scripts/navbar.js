@@ -1,44 +1,27 @@
-console.log("Sanity check!");
+console.log('Sanity check!');
 
 // Store all header interaction here
-$('.mobile-nav-toggle').on('click', ()=>{
-  $('.navLinks').toggleClass("show");
+$('.mobile-nav-toggle').on('click', () => {
+  $('.navLinks').toggleClass('show');
 })
 
-var slideshow = 0;
- let slideIndex =0;
-showSlides();
+/* Auto playing slideshow on the homepage*/
+$('.introImg').hide();
 
-function plusSlides(n) {
-  goToSlide(slideIndex += n);
-}
+//Selects the first image in the slideshow
+let $this = $('.introImg').first();
+$this.show();
+let i = 0;
 
-
-function showSlides() {
-    var i;
-    var slides = document.getElementsByClassName("introImg");
-    for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-    }
-    slideIndex++;
-
-    if (slideIndex > slides.length) { slideIndex = 1 }
-
-    slides[slideIndex-1].style.display = "block";
-    setTimeout(showSlides, 3000);
-}
-
-function goToSlide(n) {
-  var i;
-  var slides = document.getElementsByClassName("introImg");
-
-  if (n > slides.length) { slideIndex = 1 }
-
-  if (n < 1) { slideIndex = slides.length }
-
-  for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
+//Iterates through each slide, fading between the slides every 5 seconds
+setInterval(() => {
+  $this.fadeOut(1000);
+  if ($this.is(':last-child')) {
+    $this = $('.introImg').first();
+  } else {
+    $this = $this.next();
   }
-
-  slides[slideIndex-1].style.display = "block";
-}
+  setTimeout(() => {
+    $this.fadeIn(1000)
+  }, 1000);
+}, 5000);

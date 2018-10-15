@@ -68,9 +68,6 @@ h1, h2, h3 {
   text-align: center;
 }
 
-h1 {
-}
-
 h2, h3 {
   font-weight: 400;
   text-transform: uppercase;
@@ -221,13 +218,12 @@ input[type=submit]:hover {
 button{
     border-radius: 2px;
     border: 0;
-    padding: 10px 25px;
+    padding: 20px 60px;
     border-radius: 2px;
-    padding: 10px 25px;
     text-align: center;
     background-color: #709F74;
     font-size: 1.25em;
-    color: #F7F9F3;
+    color: #FFFFFF;
 }
 
 
@@ -259,7 +255,7 @@ header h3 {
   padding: 20px;
   margin: .5em;
   font-weight: 300;
-  color: #263439;
+  color: #333333;
   margin-bottom: 60px;
 }
 
@@ -274,7 +270,7 @@ footer {
 
 .introduction {
   color: #F7F9F3;
-  background-color: #152f25;
+  background-color: #333333;
 }
 
 .about {

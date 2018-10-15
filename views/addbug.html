@@ -26,38 +26,44 @@
       </ul>
 
   </nav>
-
-  <section class="addBugForm">
-    <div class="submitted">
-      <h2>Thank you for submitting!</h2>
-    </div>
-
-    <form id="addBug">
-      <p class="addBug">Add A New Bug</p>
-      <div class="addBugNames">
-        <input type="text" id="addBugCommonName" name="commonName" placeholder="Common Name" />
-        <label for="commonName"></label>
-        <input type="text" id="addBugScientificName" name="scientificName" placeholder="Scientific Name" />
-        <label for="scientificName"></label>
-        <select name="familyName" id="addBugFamilyName"></select>
-        <label for="familyName"></label>
+  <main>
+    <section class="addBugForm">
+      <div class="submitted">
+        <h2>Thank you for submitting!</h2>
       </div>
 
-      <textarea id="addBugDescription" name="description" placeholder="Description"></textarea>
-      <label for="description"></label>
+      <form id="addBug">
+        <p class="addBug">Add A New Bug</p>
+        <div class="addBugNames">
+          <input type="text" id="addBugCommonName" name="commonName" placeholder="Common Name" />
+          <label for="commonName"></label>
+          <input type="text" id="addBugScientificName" name="scientificName" placeholder="Scientific Name" />
+          <label for="scientificName"></label>
+          <div class="selectWrapper">
+            <select name="familyName" id="addBugFamilyName" style="width:100%"></select>
+          </div>
 
-      <input type="submit" class="submitB" value="Submit" />
-    </form>
-  </section>
+          <label for="familyName"></label>
+        </div>
 
-  <section class="addFamilyForm">
-    <form id="addFamily">
-      <p>Are we missing a family?</p>
-      <input type="text" id="addFamilyName" name="name" placeholder="Family Name" />
-      <label for="name"></label>
-      <input type="submit" />
-    </form>
-  </section>
+        <textarea id="addBugDescription" name="description" placeholder="Description"></textarea>
+        <label for="description"></label>
+
+        <input type="submit" class="submitB" value="Submit" />
+      </form>
+    </section>
+
+    <section class="addFamilyForm">
+      <form id="addFamily">
+        <p>Are we missing a family?</p>
+        <input type="text" id="addFamilyName" name="name" placeholder="Family Name" />
+        <label for="name"></label>
+        <input type="submit" />
+      </form>
+    </section>
+  </main>
+
+
 
 
 

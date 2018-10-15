@@ -3,7 +3,7 @@
 body {
   background-image: url("../images/bugLife.png");
   background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-size: 105% 100%;
 }
 main{
   display: flex;

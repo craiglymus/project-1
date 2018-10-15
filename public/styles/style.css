@@ -51,6 +51,17 @@ img {
   border-radius: 4px;
 }
 
+code{
+  display: block;
+  white-space: pre-wrap;
+}
+
+.endpointDoc{
+  border: 1px solid #517957;
+  padding: 1em;
+  margin-bottom: 1.5em;
+}
+
 /* Typography */
 h1, h2, h3 {
   font-family: "Kiona", sans-serif;

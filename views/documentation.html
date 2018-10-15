@@ -28,12 +28,172 @@
 
   </nav>
 
-  <section class="intro">
 
-  </section>
 
   <section class="docInfo">
-    
+    <div class="intro">
+      <h1>Welcome to Bug Bounty, your comprehensive guide to Bug Stuff.</h1>
+      <p>
+        Here you will all you need to know about the little critters that share the world with us.
+      </p>
+      <p>
+        Our bug library collects species information and connects it to Wikipedia for an easy to use, accessible experience. Our users create the content they need most by adding insects and families to our ever-growing database. The Bug Bounty API
+        implements a RESTful interface that can be used for identification, search, and sharing.
+      </p>
+
+    </div>
+
+    <div class="endpointDoc">
+      <p>
+        <strong>URL: </strong>localhost:3000/api/insects
+      </p>
+      <code>
+        method: 'GET',
+        path: '/api/insects',
+        description: 'Returns all insects in the database'
+      </code>
+      <p>Returns all insect objects in the database</p>
+      <h3>Sample Response:</h3>
+      <code>
+      {
+        _id: "5bc3c2965aa8bf050e5e04a6",
+        commonName: "common red ant",
+        scientificName: "myrmica rubra",
+        familyName: "Formicidae",
+        description: "Small red ants found in backyards everywhere.",
+        link: "https://en.wikipedia.org/wiki/Myrmica_rubra",
+        summary: "Myrmica rubra, also known as the European fire ant or common red ant,
+        is a species of ant of the genus Myrmica, found all over Europe and in some parts
+        of North America and Asia. It is mainly red in colour, with slightly darker
+        pigmentation on the head. These ants live under stones and fallen trees, and
+        in soil. They are aggressive, often attacking rather than running away, and are
+        equipped with a sting, though they lack the ability to spray formic acid like the
+        genus Formica.",
+        image: "https://upload.wikimedia.org/wikipedia/commons/b/b6/Myrmica_rubra_casent0010684_profile_1.jpg",
+        __v: 0,
+        family: {
+        insects: [
+        "5bc3c2965aa8bf050e5e04a6"
+        ],
+        _id: "5bc3c2965aa8bf050e5e04a5",
+        name: "Formicidae",
+        link: "https://en.wikipedia.org/wiki/Ant",
+        summary: "Ants are eusocial insects of the family Formicidae and, along with
+        the related wasps and bees, belong to the order Hymenoptera. Ants evolved from
+        wasp-like ancestors in the Cretaceous period, about 140 million years ago, and
+        diversified after the rise of flowering plants. More than 12,500 of an estimated
+        total of 22,000 species have been classified. They are easily identified by their
+        elbowed antennae and the distinctive node-like structure that forms their
+        slender waists.",
+        image: "https://upload.wikimedia.org/wikipedia/commons/d/dd/Blackants-bredcrust-tokyo-may2015.webm",
+        __v: 1
+        }
+      }
+      </code>
+      <ul>
+        <li>
+          <strong>commonName:</strong> Returns the common name of the insect that the user contributed.
+        </li>
+      </ul>
+    </div>
+
+
+    <div class="endpointDoc">
+      <p>
+        <strong>URL: </strong>localhost:3000/api/insects/:id
+      </p>
+      <code>
+        method: 'GET',
+        path: '/api/insects/:id',
+        description: 'Returns an individual by id.'
+      </code>
+      <p>
+        Returns an individual insect by its ID so it can be individually manipulated
+      </p>
+    </div>
+
+
+    <div class="endpointDoc">
+      <p>
+        <strong>URL: </strong>localhost:3000/api/insects/species/:name
+      </p>
+      <code>
+        method: 'GET',
+        path: '/api/insects/species/:name',
+        description: 'Returns an individual insect by common name.'
+      </code>
+      <p>
+        Returns an insect object by common name, used in the search function. Accepts partial names and will return any entry that contains that string in the common name.
+      </p>
+    </div>
+
+
+
+    <div class="endpointDoc">
+      <p>
+        <strong>URL: </strong>localhost:3000/api/insects/:id
+      </p>
+      <code>
+        method: 'PUT',
+        path: '/api/insects/:id',
+        description: 'Edits an existing entry in the database'
+      </code>
+      <p>
+        Edits an existing entry in the database, can only edit common name, species name, and description.
+      </p>
+    </div>
+
+
+    <div class="endpointDoc">
+      <p>
+        <strong>URL: </strong>localhost:3000/api/insects/:id
+      </p>
+
+      <h3>Sample Response</h3>
+      <code>
+        method: 'POST',
+        path: '/api/insects',
+        description: 'Adds an insect entry to the database'
+      </code>
+      <p>
+        Creates a new insect in the database, and links that insect entry to the corresponding Wikipedia page.
+      </p>
+
+    </div>
+
+    <div class="endpointDoc">
+      <p>
+        <strong>URL: </strong>localhost:3000/api/insects/:id
+      </p>
+
+      <h3>Sample Response</h3>
+      <code>
+        method: 'POST',
+        path: '/api/families',
+        description: 'Adds a family entry to the database'
+      </code>
+      <p>
+        Creates a new family in the database, and links that insect entry to the corresponding Wikipedia page.
+      </p>
+
+    </div>
+
+    <div class="endpointDoc">
+      <p>
+        <strong>URL: </strong>localhost:3000/api/insects/:id
+      </p>
+
+      <h3>Sample Response</h3>
+      <code>
+        method: 'DELETE',
+        path: '/api/insects/:id',
+        description: 'Destroys an existing entry'
+        </code>
+        <p>
+          Deletes an insect from the database.
+        </p>
+    </div>
+
   </section>
 
 

@@ -1,4 +1,5 @@
-*{
+/* Global */
+* {
   box-sizing: border-box;
 }
 
@@ -6,38 +7,12 @@ section {
   padding: 2em;
 }
 
-.insect{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  border-bottom: 1px solid #517957;
-  padding: .5em;
-  transition: all 0.3s ease;
-}
-
-.insect:hover{
-  padding: 1em;
-}
-.insect div{
-
-}
-
-.insect-info-container{
-  margin-left: 1.5em;
-  width: 69%;
-}
-
-.insect-info-container span{
-  font-weight: bold;
-  text-transform: capitalize;
-}
-
-img{
+img {
   width: 300px;
 }
 
-.searchForm{
+/* Searchbar */
+.searchForm {
   margin-top: 100px;
   padding: 2em;
   display: flex;
@@ -45,7 +20,6 @@ img{
   justify-content: center;
   box-sizing: border-box;
 }
-
 
 #search input[type=text] {
   color: #263439;
@@ -57,16 +31,41 @@ img{
   font-size: 1em;
 }
 
-.hidden-form{
-    width: 69%;
-    padding: 0 1.5em;
+.insect {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid #517957;
+  padding: .5em;
+  transition: all 0.3s ease;
 }
 
-.hidden-form>*{
+.insect:hover {
+  padding: 1em;
+}
+
+.insect-info-container {
+  margin-left: 1.5em;
+  width: 69%;
+}
+
+.insect-info-container span {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+/* The edit form */
+.hidden-form {
+  width: 69%;
+  padding: 0 1.5em;
+}
+
+.hidden-form>* {
   margin-bottom: 8px;
 }
 
-.hidden-form input[type=submit]{
+.hidden-form input[type=submit] {
   margin: 6px auto;
   padding: 10px 15px;
   display: block;
@@ -81,21 +80,19 @@ img{
   margin: 0 6px;
 }
 
-
-.editBugNames{
+.editBugNames {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
 }
 
-
-.selectWrapper{
+.selectWrapper {
   width: 30%;
   margin: 0;
   padding: 0;
 }
 
-select{
+select {
   padding: 10px;
   background-color: #F7F9F3;
   font-size: .75em;
@@ -103,33 +100,37 @@ select{
   border: 1px solid #709F74;
 }
 
-#editBugDescription{
+#editBugDescription {
   height: 8em;
   width: 100%;
   background-color: #F7F9F3;
   border: 1px solid #709F74;
   font-size: .75em;
   font-family: 'Roboto', sans-serif;
-  color:#263439;
+  color: #263439;
   padding: 10px;
 }
 
-@media only screen and (max-width: 680px){
-  .insect{
+@media only screen and (max-width: 680px) {
+  .insect {
     flex-direction: column;
   }
-  .hidden-form input[type=text]{
+
+  .hidden-form input[type=text] {
     width: 100%;
   }
-  .selectWrapper{
+
+  .selectWrapper {
     width: 100%;
   }
-  .insect-info-container{
+
+  .insect-info-container {
     width: 100%;
     margin-left: 0;
   }
-  .searchForm{
-    width:inherit;
+
+  .searchForm {
+    width: inherit;
   }
 
   #search input[type=text] {
@@ -137,6 +138,7 @@ select{
     width: 100%;
     margin: 0;
   }
+
   #search input[type=submit] {
     width: 100%;
     margin-top: 8px;

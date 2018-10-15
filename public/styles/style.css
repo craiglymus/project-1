@@ -204,16 +204,6 @@ input {
   padding: 10px 25px;
 }
 
-#search input[type=text] {
-  color: #263439;
-  width: 25em;
-  margin-right: 1em;
-  padding: 20px;
-  background-color: #F7F9F3;
-  boder: 1px solid #709F74;
-  font-size: 1em;
-}
-
 
 input[type=submit] {
   text-align: center;
@@ -236,7 +226,7 @@ button{
     padding: 10px 25px;
     text-align: center;
     background-color: #709F74;
-    font-size: 1em;
+    font-size: 1.25em;
     color: #F7F9F3;
 }
 
@@ -319,6 +309,15 @@ footer {
     text-align: center;
   }
 
+  section{
+    padding: 1.25em;
+    padding-top: 6em;
+  }
+
+  header h1{
+    font-size: 4em;
+  }
+
   .mobile-only {
     display: block;
   }
@@ -331,6 +330,14 @@ footer {
     position: relative;
     z-index: 9;
   }
+  img{
+    align-self: center;
+  }
+
+  section h2{
+    font-size: 2.5em;
+    margin-bottom: 1em;
+  }
 
   .hamburger {
     display: block;
@@ -342,15 +349,21 @@ footer {
 		left: 0;
     right: 0;
     padding: 0;
+
     opacity: 0;
     top: -120px;
     transition: top 0.3s ease, opacity 0.3s ease;
     z-index: 8;
 	}
 
+  nav li:last-of-type{
+    padding-bottom: .5em;
+  }
+
   nav .navLinks.show {
-    top: 165px;
+    top: 125px;
     opacity: 1;
+
   }
 
   nav .navLinks li {

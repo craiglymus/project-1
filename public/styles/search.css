@@ -46,6 +46,17 @@ img{
   box-sizing: border-box;
 }
 
+
+#search input[type=text] {
+  color: #263439;
+  width: 25em;
+  margin-right: 1em;
+  padding: 20px;
+  background-color: #F7F9F3;
+  border: 1px solid #709F74;
+  font-size: 1em;
+}
+
 .hidden-form{
     width: 69%;
     padding: 0 1.5em;
@@ -112,5 +123,22 @@ select{
   }
   .selectWrapper{
     width: 100%;
+  }
+  .insect-info-container{
+    width: 100%;
+    margin-left: 0;
+  }
+  .searchForm{
+    width:inherit;
+  }
+
+  #search input[type=text] {
+    color: #263439;
+    width: 100%;
+    margin: 0;
+  }
+  #search input[type=submit] {
+    width: 100%;
+    margin-top: 8px;
   }
 }

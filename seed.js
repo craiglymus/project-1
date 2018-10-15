@@ -22,41 +22,22 @@ const familyNames = [
   'Ichneumonidae',
   'Megachilidae',
   'Mutillidae'
-]
-
-const exampleFamily = {
-  name: 'Apidae',
-  link: 'https://en.wikipedia.org/wiki/Apidae',
-  summary: 'Apidae is the largest family within the superfamily Apoidea, containing at least 5700 species of bees. The family includes some of the most commonly seen bees, including bumblebees and honey bees, but also includes stingless bees, carpenter bees, orchid bees, cuckoo bees, and a number of other less widely known groups. Many are valuable pollinators in natural habitats and for agricultural crops.',
-  image: 'https://upload.wikimedia.org/wikipedia/commons/3/32/Xylocopa_micans.JPG'
-}
+];
 
 /* Prepopulated Insects */
 const seedInsects = [{
-  commonName: 'western honey bee',
-  scientificName: 'apis mellifera',
-  familyName: 'Apidae',
-  description: `These are probably the bees you're thinking of when you think of honey bees.`,
-},
-{
-  commonName: 'common red ant',
-  scientificName: 'myrmica rubra',
-  familyName: 'Formicidae',
-  description: 'Small red ants found in backyards everywhere.'
-}
+    commonName: 'western honey bee',
+    scientificName: 'apis mellifera',
+    familyName: 'Apidae',
+    description: `These are probably the bees you're thinking of when you think of honey bees.`,
+  },
+  {
+    commonName: 'common red ant',
+    scientificName: 'myrmica rubra',
+    familyName: 'Formicidae',
+    description: 'Small red ants found in backyards everywhere.'
+  }
 ];
-
-
-
-/*
-- Create a function to iterate over seedFamilies
-  - Create the family records
-  - Create insect records
-  - Iterate through insects and associate family to insects and vice versa.
-*/
-
-//An Array that holds all of the family objects (may delete later)
-let seedFamilies = [];
 
 /* Iterates through the families in the familyNames array.
    For each name in the array, it creates a mongoose model that is populated with MediaWiki API information.*/
@@ -89,25 +70,20 @@ const addWikiToFamilies = (families) => {
           if (json.extract) wikiItem.summary = json.extract;
           if (json.originalimage) wikiItem.image = json.originalimage.source; //eventually, default image
 
-          //Adds the data to the collection seeded families.
-          seedFamilies.push(wikiItem);
-
           //Creates a family document.
-          db.Family.create(wikiItem, (err, savedFamily) => {
-          });
+          db.Family.create(wikiItem, (err, savedFamily) => {});
         }
-      })
-      .on('end', () => {
-      })
+      });
+      .on('end', () => {})
   }
 }
 
 addWikiToFamilies(familyNames);
 
 //Delete families
-db.Family.deleteMany({}, (err, removedFamilies)=>{
+db.Family.deleteMany({}, (err, removedFamilies) => {
   if (err) throw err;
-//Delete Insects
+  //Delete Insects
   db.Insect.deleteMany({}, (err, newInsect) => {
     if (err) throw err;
     //for loop for insects
@@ -124,6 +100,7 @@ db.Family.deleteMany({}, (err, removedFamilies)=>{
           'User-Agent': 'my-reddit-client'
         }
       }
+      //Populates insects with Wikipedia data
       request(getRequest, (err, res, body) => {
         let json = JSON.parse(body);
         if (json.content_urls) wikiItem.link = json.content_urls.desktop.page
@@ -132,20 +109,21 @@ db.Family.deleteMany({}, (err, removedFamilies)=>{
 
         db.Insect.create(wikiItem, (err, savedInsect) => {
           if (err) throw err;
-          db.Family.findOne({name: wikiItem.familyName}, (err, savedFamily) => {
+          db.Family.findOne({
+            name: wikiItem.familyName
+          }, (err, savedFamily) => {
             if (err) throw err;
             savedFamily.insects.push(savedInsect);
-            savedFamily.save((err, savedFamily)=>{
+            savedFamily.save((err, savedFamily) => {
               if (err) throw err;
             });
             savedInsect.family = savedFamily;
-            savedInsect.save((err, savedInsect)=>{
-              if(err) throw err;
+            savedInsect.save((err, savedInsect) => {
+              if (err) throw err;
             });
           });
         });
       });
-
     }
   });
-})
+});

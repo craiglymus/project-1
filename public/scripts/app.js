@@ -2,7 +2,7 @@
 const wikiBaseUrl = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
 
 //Renders an insect's information, with a form to edit it.
-const render = (insect) =>{
+const render = (insect) => {
   console.log(insect);
   $('.bugData').prepend(`
     <div class="insect" id="${insect._id}">
@@ -10,7 +10,7 @@ const render = (insect) =>{
 
       <div class="insect-info-container">
       <span class="names">
-        <p>${insect.commonName}</p>
+        <a herf="${insect.link}"><p>${insect.commonName}</p></a>
         <p>${insect.scientificName}</p>
         <p>${insect.familyName}</p>
       </span>
@@ -42,12 +42,12 @@ const searchByName = (name) => {
   $.ajax({
     method: 'GET',
     url: `/api/insects/species/${name}`,
-    success: (response) =>{
+    success: (response) => {
       $('.bugData').html('');
       console.log(response)
-      if(response !== null){
+      if (response !== null) {
         //Allows for return of multiple items if partial match
-        for(let i = 0; i< response.length; i++){
+        for (let i = 0; i < response.length; i++) {
           render(response[i]);
         }
       } else {
@@ -59,7 +59,7 @@ const searchByName = (name) => {
   })
 };
 
-$('#search').on('submit', (e)=>{
+$('#search').on('submit', (e) => {
   e.preventDefault();
   let searchName = $('#searchName').val();
   console.log(`asking for ${searchName}`)
@@ -67,7 +67,7 @@ $('#search').on('submit', (e)=>{
 })
 
 //Creates a new bug, drawing the information from Wikipedia.
-$('#addBug').on('submit', (e)=>{
+$('#addBug').on('submit', (e) => {
   e.preventDefault();
   let addBugCommonName = $('#addBugCommonName').val().toLowerCase();
   let addBugScientificName = $('#addBugScientificName').val().toLowerCase();
@@ -80,38 +80,40 @@ $('#addBug').on('submit', (e)=>{
     description: addBugDescription
   };
 
+  //If the bug has been given a valid common name, it will search Wikipedia using that name. Otherwise, it will use the scientific name.
   let title = addedBug.commonName ? addedBug.commonName : addedBug.scientificName;
   title = title.trim().split(' ').join('_');
 
   $.ajax({
     method: 'GET',
     url: `${wikiBaseUrl}${title}`,
-    success: (response) =>{
-      if (response.content_urls) addedBug.link = response.content_urls.desktop.page
-      if(response.extract) addedBug.summary = response.extract;
-      if(response.originalimage.source) addedBug.image = response.originalimage.source;
+    success: (response) => {
+      //Receives the Wikipedia information and fulls the bug's link, summary, and image from the Wiki.
+      if (response.content_urls) addedBug.link = response.content_urls.desktop.page;
+      if (response.extract) addedBug.summary = response.extract;
+      if (response.originalimage.source) addedBug.image = response.originalimage.source;
       $.ajax({
         method: 'POST',
         url: '/api/insects',
         data: addedBug,
-        success: (response)=>{
+        success: (response) => {
           $('.submitted').show();
         },
-        error: ()=>{
+        error: () => {
           console.log('Error');
         }
       })
     },
-    error: (err) =>{
+    error: (err) => {
       console.log('Error occurred');
     }
   });
 
 });
 
-//Creates a new family, drawing on wikipedia
+//Creates a new family, drawing on Wikipedia for its information, similar to the function of adding an insect.
 
-$('#addFamily').on('submit', (e)=>{
+$('#addFamily').on('submit', (e) => {
   e.preventDefault();
   let addFamilyName = $('#addFamilyName').val();
   let addedFamily = {
@@ -126,22 +128,22 @@ $('#addFamily').on('submit', (e)=>{
     url: `${wikiBaseUrl}${title}`,
     success: (response) => {
       if (response.content_urls) addedFamily.link = response.content_urls.desktop.page
-      if(response.extract) addedFamily.summary = response.extract;
-      if(response.originalimage.source) addedFamily.image = response.originalimage.source;
+      if (response.extract) addedFamily.summary = response.extract;
+      if (response.originalimage.source) addedFamily.image = response.originalimage.source;
       $.ajax({
         method: 'POST',
         url: '/api/families',
         data: addedFamily,
-        success: (response)=>{
+        success: (response) => {
           $('.submitted').show();
         },
-        error: (err) =>{
+        error: (err) => {
           console.log(err);
 
         }
       })
     },
-    error: (err) =>{
+    error: (err) => {
       $('.submitted').html(`An error occurred. Please check your spelling.`);
     }
   });
@@ -190,7 +192,7 @@ $(document).on('submit', '.edit-form', (e) => {
       $.ajax({
         method: 'GET',
         url: `/api/insects/${id}`,
-        success: (response)=>{
+        success: (response) => {
           $(`#${id}`).remove();
           render(response);
         }
@@ -206,7 +208,7 @@ $(document).on('submit', '.edit-form', (e) => {
 });
 
 
-//Delete
+//Deletes an insect from the database and removes it from the display.
 $(document).on('click', '.delete', (e) => {
   let deletedId = $(e.target).parents('.insect').attr('id');
   console.log(deletedId);
@@ -224,26 +226,27 @@ $(document).on('click', '.delete', (e) => {
   });
 });
 
-const setUp = () =>{
+const setUp = () => {
+  //Displays all of the insects on the database on load
   $.ajax({
     method: 'GET',
     url: '/api/insects',
-    success: (response) =>{
-      for(let i = 0; i < response.length; i++){
+    success: (response) => {
+      for (let i = 0; i < response.length; i++) {
         render(response[i]);
       }
     }
   });
 
   //Populates dropdown menu in form to reflect Family Data
-$.ajax({
-  method: 'GET',
-  url: '/api/families',
-  success: (response)=>{
-    for(let i = 0; i < response.length; i++){
-      $('#addBugFamilyName').append(`<option value="${response[i].name}">${response[i].name}</option>`);
+  $.ajax({
+    method: 'GET',
+    url: '/api/families',
+    success: (response) => {
+      for (let i = 0; i < response.length; i++) {
+        $('#addBugFamilyName').append(`<option value="${response[i].name}">${response[i].name}</option>`);
+      }
     }
-  }
-});
+  });
 }
 setUp();
